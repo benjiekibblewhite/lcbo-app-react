@@ -1,6 +1,7 @@
 plan:
 
 Have dummy results in data.js
+use Axios for Ajax
 use bulma for mockups
 can't use bulma without sass! 
 Install sass. :-P 
@@ -20,6 +21,12 @@ Search Input Field.jsx
 - simple text input + submit button
 - stores search term in state
 - submit calls AJAX
+- submit renders Product Cards 
+
+
+Prev/Next buttons
+- renders previous/next set of cards from json response
+
 
 ProductCard.jsx
 - on click, callback function to show stores with product in stock
