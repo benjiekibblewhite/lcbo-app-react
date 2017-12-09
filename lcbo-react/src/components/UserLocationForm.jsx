@@ -11,7 +11,7 @@ constructor(props) {
     this.handleLocationFormSubmit = this.handleLocationFormSubmit.bind(this);
     this.state= {
         userAddress: '',
-        userCity: '',
+        userCity: 'Toronto',
     }
 }
 
@@ -37,6 +37,10 @@ updateuserCity(event){
 handleLocationFormSubmit(event) {
     event.preventDefault();
     this.props.updateuserLocation(this.state.userAddress, this.state.userCity);
+    this.setState({
+        userAddress: '',
+        userCity: '',
+    })
 }
 
     render() {

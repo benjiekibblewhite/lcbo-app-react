@@ -2,13 +2,19 @@ plan:
 
 Have dummy results in data.js
 use bulma for mockups
+can't use bulma without sass! 
+Install sass. :-P 
+
 
 
 User Location Form.jsx
-- cities in Array 
-- text input for address 
-- onsubmit callback function 
-	- concatenates address + city + ON
+x cities in Array 
+x text input for address 
+x onsubmit callback function 
+	x concatenates address + city + ON
+
+How to remove Component when form submits? 
+
 
 Search Input Field.jsx
 - simple text input + submit button
