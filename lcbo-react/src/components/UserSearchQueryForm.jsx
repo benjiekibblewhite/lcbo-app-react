@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class UserSearchQueryForm extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.updatesearchQuery = this
             .updatesearchQuery
@@ -13,11 +13,11 @@ export default class UserSearchQueryForm extends React.Component {
 
         this.state = {
             searchQuery: ''
-        }
+        };
     }
 
     updatesearchQuery(event) {
-        this.setState({searchQuery: event.target.value})
+        this.setState({searchQuery: event.target.value});
     }
 
     handleSearchSubmit(event) {
@@ -25,7 +25,7 @@ export default class UserSearchQueryForm extends React.Component {
         this
             .props
             .searchFormSubmit(this.state.searchQuery);
-        this.setState({searchQuery: ''})
+        this.setState({searchQuery: ''});
     }
 
     render() {

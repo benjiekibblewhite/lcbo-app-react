@@ -5,6 +5,7 @@ import 'bulma/css/bulma.css';
 import Header from './components/Header';
 import UserLocationForm from './components/UserLocationForm';
 import UserSearchQueryForm from './components/UserSearchQueryForm';
+import ProductCard from './components/ProductCard';
 
 import storeResults from './data/storetestdata';
 import productResults from './data/producttestdata';
