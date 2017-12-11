@@ -33,6 +33,7 @@ export default class UserSearchQueryForm extends React.Component {
             <section className="section">
                 <div className="field section">
                     <form onSubmit={this.handleSearchSubmit}>
+                        <label className="label">Search the LCBO</label>
                         <div className="control">
                             <input
                                 id="userAddress"
@@ -42,10 +43,12 @@ export default class UserSearchQueryForm extends React.Component {
                                 value={this.state.searchQuery}
                                 onChange={this.updatesearchQuery}/>
                         </div>
-                        <div className="control">
-                            <button className="button is-primary" type="submit">
-                                Submit
-                            </button>
+                        <div className="field">
+                            <div className="control">
+                                <button className="button is-primary" type="submit">
+                                    Submit
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>

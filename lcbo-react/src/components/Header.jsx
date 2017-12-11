@@ -3,7 +3,7 @@ import React from 'react';
 export default class Header extends React.Component {
     render() {
         return (
-            <section className="hero is-primary">
+            <section className="hero is-dark is-bold">
                 <div className="hero-body columns">
                     <div className="container column">
                         <h1 className="title">

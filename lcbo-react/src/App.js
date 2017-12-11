@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 
-import './App.css';
+import 'bulma/css/bulma.css';
 
 import Header from './components/Header';
 import UserLocationForm from './components/UserLocationForm';
 import UserSearchQueryForm from './components/UserSearchQueryForm';
+
+import storeResults from './data/storetestdata';
+import productResults from './data/producttestdata';
 
 class App extends Component {
 
@@ -18,19 +21,24 @@ class App extends Component {
       .handleSearchFormSubmit
       .bind(this);
     this.state = {
+      showLocationForm: true,
+      showQueryForm: false,
       userLocation: "",
       userSearchQuery: ""
     };
   }
 
   updateuserLocation(userAddress, userCity) {
-    console.log("yes");
     const userLocation = `${userAddress}, ${userCity}`;
-    this.setState({userLocation: userLocation})
+    this.setState({
+      userLocation: userLocation,
+      showLocationForm: false,
+      showQueryForm: true,
+    });
   }
 
   handleSearchFormSubmit(searchQuery) {
-    console.log("yes");
+    console.log(productResults);
     this.setState({userSearchQuery: searchQuery});
   }
 
@@ -40,16 +48,16 @@ class App extends Component {
         <Header/>
         <section className="section">
           <div className="columns">
-            <div classname="column is-one-half">
-              <h3>Your address is set to {this.state.userLocation}</h3>
+            <div className="column">
+              {this.state.userLocation.length > 0 ? <h3>Your address is set to <strong>{this.state.userLocation}</strong></h3> : null }
             </div>
-            <div classname="column is-one-half">
-              <h3>You are searching for {this.state.userSearchQuery}</h3>
+            <div className="column">
+            {this.state.userSearchQuery.length > 0 ?<h3>You are searching for <strong>{this.state.userSearchQuery}</strong></h3> : null }
             </div>
           </div>
         </section>
-        <UserLocationForm updateuserLocation={this.updateuserLocation}/>
-        <UserSearchQueryForm searchFormSubmit={this.handleSearchFormSubmit}/>
+        {this.state.showLocationForm ? <UserLocationForm updateuserLocation={this.updateuserLocation}/> : null }
+        {this.state.showQueryForm ? <UserSearchQueryForm searchFormSubmit={this.handleSearchFormSubmit}/> : null}
       </div>
     );
   }

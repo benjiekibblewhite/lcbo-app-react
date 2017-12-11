@@ -48,9 +48,11 @@ export default class UserLocationForm extends React.Component {
     render() {
         return (
             <section className="section">
-                <div className="field section">
-                    <form onSubmit={this.handleLocationFormSubmit}>
-                        <div className="control">
+            <h3 className="subtitle">What is your location?</h3>
+                <form onSubmit={this.handleLocationFormSubmit}>
+                    <div className="field">
+                        <label className="label">Street Address</label>
+                        <div className="control is-expanded">
                             <input
                                 id="userAddress"
                                 className="input is-large"
@@ -60,6 +62,7 @@ export default class UserLocationForm extends React.Component {
                                 onChange={this.updateuserAddress}/>
                         </div>
                         <div className="control">
+                        <label className="label">City</label>
                             <div className="select">
                                 <select
                                     id="userCity"
@@ -69,11 +72,13 @@ export default class UserLocationForm extends React.Component {
                                 </select>
                             </div>
                         </div>
+                    </div>
+                    <div className="field">
                         <div className="control">
                             <button className="button is-primary" type="submit">Submit</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </section>
         )
     }
