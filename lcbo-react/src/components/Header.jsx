@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default class Header extends React.Component{
-    render(){
+export default class Header extends React.Component {
+    render() {
         return (
             <section className="hero is-primary">
                 <div className="hero-body columns">
@@ -13,6 +13,6 @@ export default class Header extends React.Component{
                     </div>
                 </div>
             </section>
-     )
+        )
     }
 }

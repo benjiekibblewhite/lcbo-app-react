@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 import './App.css';
 
@@ -11,49 +11,45 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.updateuserLocation = this.updateuserLocation.bind(this);
-    this.handleSearchFormSubmit = this.handleSearchFormSubmit.bind(this);
+    this.updateuserLocation = this
+      .updateuserLocation
+      .bind(this);
+    this.handleSearchFormSubmit = this
+      .handleSearchFormSubmit
+      .bind(this);
     this.state = {
       userLocation: "",
-      userSearchQuery: "",
-    }
+      userSearchQuery: ""
+    };
   }
 
-updateuserLocation(userAddress, userCity) {
-  console.log("yes");
-  const userLocation = `${userAddress}, ${userCity}`;
-  this.setState({
-    userLocation: userLocation,
-  })
-}
+  updateuserLocation(userAddress, userCity) {
+    console.log("yes");
+    const userLocation = `${userAddress}, ${userCity}`;
+    this.setState({userLocation: userLocation})
+  }
 
-handleSearchFormSubmit(searchQuery) {
-  console.log("yes");
-  this.setState({
-    userSearchQuery: searchQuery,
-  })
-}
+  handleSearchFormSubmit(searchQuery) {
+    console.log("yes");
+    this.setState({userSearchQuery: searchQuery});
+  }
 
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header/>
         <section className="section">
-        <div className="columns">
-          <div classname="column is-one-half">
-            <h3>Your address is set to {this.state.userLocation}</h3>
+          <div className="columns">
+            <div classname="column is-one-half">
+              <h3>Your address is set to {this.state.userLocation}</h3>
+            </div>
+            <div classname="column is-one-half">
+              <h3>You are searching for {this.state.userSearchQuery}</h3>
+            </div>
           </div>
-          <div classname="column is-one-half">
-            <h3>You are searching for {this.state.userSearchQuery}</h3>
-          </div>
-        </div>
         </section>
-        <UserLocationForm
-          updateuserLocation = {this.updateuserLocation}
-        />
-        <UserSearchQueryForm
-          searchFormSubmit = {this.handleSearchFormSubmit}
-        />
+        <UserLocationForm updateuserLocation={this.updateuserLocation}/>
+        <UserSearchQueryForm searchFormSubmit={this.handleSearchFormSubmit}/>
       </div>
     );
   }
