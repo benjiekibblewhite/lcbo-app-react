@@ -8,6 +8,7 @@ import Header from './components/Header';
 import UserLocationForm from './components/UserLocationForm';
 import UserSearchQueryForm from './components/UserSearchQueryForm';
 import ProductCard from './components/ProductCard';
+import StoreCard from './components/StoreCard';
 
 import storeResults from './data/storetestdata';
 import productResults from './data/producttestdata';
@@ -26,6 +27,9 @@ class App extends Component {
     this.renderProducts = this
       .renderProducts
       .bind(this);
+    this.renderStores = this
+      .renderStores
+      .bind(this);
     this.handleSearchFormSubmit = this
       .handleSearchFormSubmit
       .bind(this);
@@ -36,7 +40,8 @@ class App extends Component {
       showStoreResults: false,
       userLocation: "",
       userSearchQuery: "",
-      searchResults: {}
+      searchResults: {},
+      storeResults: storeResults,
     };
   }
 
@@ -77,6 +82,24 @@ class App extends Component {
     }))
   }
 
+  renderStores(storeResults){
+    return (storeResults.result.map((store) => {
+      return(
+        <div key={store.id} className="column is-one-fifth">
+          <StoreCard
+            name={store.name}
+            numberInStock={store.quantity}
+            addressLineOne={store.address_line_1}
+            addressLineTwo={store.address_line_2}
+            city={store.city}
+            telephone={store.telephone}
+          />
+        </div>
+      )
+    })
+    )
+  }
+
   render() {
     return (
       <div className="App">
@@ -92,7 +115,7 @@ class App extends Component {
           ? <UserSearchQueryForm searchFormSubmit={this.handleSearchFormSubmit}/>
           : null}
         <FlipMove
-          staggerDelayBy={150}
+          staggerDelayBy={50}
           appearAnimation="elevator"
           enterAnimation="eleavator"
           leaveAnimation="elevator"
@@ -100,6 +123,9 @@ class App extends Component {
           {this.state.showProductResults
             ? this.renderProducts(this.state.searchResults)
             : null}
+          {this.state.showStoreResults
+          ? this.renderStores(this.state.storeResults)
+          : null }
         </FlipMove>
       </div>
     );
