@@ -31,24 +31,20 @@ export default class UserSearchQueryForm extends React.Component {
     render() {
         return (
             <section className="section">
-                <div className="field section">
+                <div className="field">
                     <form onSubmit={this.handleSearchSubmit}>
                         <label className="label">Search the LCBO</label>
-                        <div className="control">
+                        <div className="control field is-grouped">
                             <input
                                 id="userAddress"
-                                className="input is-large"
+                                className="input"
                                 type="text"
                                 placeholder="What are you looking for?"
                                 value={this.state.searchQuery}
                                 onChange={this.updatesearchQuery}/>
-                        </div>
-                        <div className="field">
-                            <div className="control">
-                                <button className="button is-primary" type="submit">
-                                    Submit
-                                </button>
-                            </div>
+                            <button className="button is-primary" type="submit">
+                                Submit
+                            </button>
                         </div>
                     </form>
                 </div>
