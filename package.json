@@ -1,6 +1,7 @@
 {
   "name": "lcbo-react",
   "version": "0.1.0",
+  "homepage": "https://benjie.ca/lcbo-app-react"
   "private": true,
   "dependencies": {
     "bulma": "^0.6.1",

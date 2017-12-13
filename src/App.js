@@ -101,6 +101,7 @@ class App extends Component {
   }
 
   render() {
+    /* Should make location + search forms animate on appear too */
     return (
       <div className="App">
         <Header
