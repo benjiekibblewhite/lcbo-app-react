@@ -4,20 +4,27 @@ export default class ProductCard extends React.Component {
 
   render() {
     return (
-      <div className="card">
-        <div className="card-image">
-          <figure className="image">
-            <img src={this.props.image} alt="Product Preview"/>
+      <div className="media card">
+        <div className="media-left">
+          <figure className="image is-128x128">
+            <img style={{height: '100%',  width: 'auto'}} src={this.props.image} alt="Product Preview"/>
           </figure>
         </div>
-        <div className="card-content">
-          <p className="title">{this.props.name}</p>
-          <p>${this.props.price.toFixed(2)}</p>
+        <div className="media-content">
+          <h2>{this.props.name}</h2>
           <p>{this.props.primaryCategory}</p>
           <p>{this.props.secondaryCategory}, {this.props.varietal}</p>
           <p>{this.props.style}</p>
           <p>{this.props.producerName}</p>
-          <p>{this.props.packagingType}, {this.props.alcoholContent / 100} % ABV</p>
+          <p>{this.props.packagingType}, {this.props.alcoholContent / 100}
+            % ABV</p>
+
+        </div>
+        <div className="media-right">
+          <p>${this
+              .props
+              .price
+              .toFixed(2)}</p>
         </div>
       </div>
     )

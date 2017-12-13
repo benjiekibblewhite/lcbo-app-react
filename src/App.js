@@ -24,6 +24,9 @@ class App extends Component {
     this.getSearchResults = this
       .getSearchResults
       .bind(this);
+    this.getStoresWithProduct = this
+      .getStoresWithProduct
+      .bind(this);
     this.renderProducts = this
       .renderProducts
       .bind(this);
@@ -33,6 +36,9 @@ class App extends Component {
     this.handleSearchFormSubmit = this
       .handleSearchFormSubmit
       .bind(this);
+    this.handleProductCardClick = this
+      .handleProductCardClick
+      .bind(this);
     this.state = {
       showLocationForm: true,
       showQueryForm: false,
@@ -41,13 +47,18 @@ class App extends Component {
       userLocation: "",
       userSearchQuery: "",
       searchResults: {},
-      storeResults: storeResults,
+      storeResults: storeResults
     };
   }
 
   updateuserLocation(userAddress, userCity) {
     const userLocation = `${userAddress}, ${userCity}`;
     this.setState({userLocation: userLocation, showLocationForm: false, showQueryForm: true});
+  }
+
+  handleSearchFormSubmit(searchQuery) {
+    this.setState({userSearchQuery: searchQuery, showProductResults: true});
+    this.getSearchResults(searchQuery);
   }
 
   getSearchResults(searchQuery) {
@@ -57,15 +68,27 @@ class App extends Component {
     this.setState({searchResults: returnedSearchResult});
   }
 
-  handleSearchFormSubmit(searchQuery) {
-    this.setState({userSearchQuery: searchQuery, showProductResults: true});
-    this.getSearchResults(searchQuery);
+  handleProductCardClick(productId) {
+    this.getStoresWithProduct(this.state.userLocation, productId)
+  }
+
+  getStoresWithProduct(productID) {
+    // Submit call to LCBO Api using Axios, get user location directly from state use
+    // storeResults for testing
+    const returnedStoresWithProduct = storeResults;
+    this.setState({storeResults: returnedStoresWithProduct, showProductResults: false, showStoreResults: true});
   }
 
   renderProducts(searchResults) {
     return (searchResults.result.map((product) => {
       return (
-        <div key={product.id} className="column is-one-fifth">
+        <div
+          key={product.id}
+          data-product-id={product.id}
+          onClick={() => {
+          this.handleProductCardClick(product.id)
+        }}
+          className="column is-half">
           <ProductCard
             image={product.image_thumb_url}
             name={product.name}
@@ -82,9 +105,9 @@ class App extends Component {
     }))
   }
 
-  renderStores(storeResults){
+  renderStores(storeResults) {
     return (storeResults.result.map((store) => {
-      return(
+      return (
         <div key={store.id} className="column is-one-fifth">
           <StoreCard
             name={store.name}
@@ -92,12 +115,10 @@ class App extends Component {
             addressLineOne={store.address_line_1}
             addressLineTwo={store.address_line_2}
             city={store.city}
-            telephone={store.telephone}
-          />
+            telephone={store.telephone}/>
         </div>
       )
-    })
-    )
+    }))
   }
 
   render() {
@@ -106,10 +127,7 @@ class App extends Component {
       <div className="App">
         <Header
           userLocation={this.state.userLocation}
-          userSearchQuery={this.state.userSearchQuery}
-        />
-
-        {this.state.showLocationForm
+          userSearchQuery={this.state.userSearchQuery}/> {this.state.showLocationForm
           ? <UserLocationForm updateuserLocation={this.updateuserLocation}/>
           : null}
         {this.state.showQueryForm
@@ -118,15 +136,15 @@ class App extends Component {
         <FlipMove
           staggerDelayBy={50}
           appearAnimation="elevator"
-          enterAnimation="eleavator"
+          enterAnimation="elevator"
           leaveAnimation="elevator"
           className="section columns is-multiline">
           {this.state.showProductResults
             ? this.renderProducts(this.state.searchResults)
             : null}
           {this.state.showStoreResults
-          ? this.renderStores(this.state.storeResults)
-          : null }
+            ? this.renderStores(this.state.storeResults)
+            : null}
         </FlipMove>
       </div>
     );
