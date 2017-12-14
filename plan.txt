@@ -3,25 +3,31 @@ plan:
 Have dummy results in data.js
 use Axios for Ajax
 use bulma for mockups
-can't use bulma without sass! 
-Install sass. :-P 
+can't use bulma without sass!
+Install sass. :-P
+
+Option to change address in header
+Option to go back to results in store view
+Copy in header: What does this app do?
+Movement for forms when appear/disappearn
+Loading animations on submit buttons
 
 
 
 User Location Form.jsx
-x cities in Array 
-x text input for address 
-x onsubmit callback function 
+x cities in Array
+x text input for address
+x onsubmit callback function
 	x concatenates address + city + ON
 
-How to remove Component when form submits? 
-
+x How to remove Component when form submits?
+	x with state!!!
 
 Search Input Field.jsx
-- simple text input + submit button
-- stores search term in state
+x  simple text input + submit button
+x stores search term in state
 - submit calls AJAX
-- submit renders Product Cards 
+x submit calls function to render Product Cards
 
 
 Prev/Next buttons
@@ -29,9 +35,9 @@ Prev/Next buttons
 
 
 ProductCard.jsx
-- on click, callback function to show stores with product in stock
+x on click, callback function to show stores with product in stock
 
 StoreCard.jsx
 - on click, callback function to open new tab with google maps walking directions
-
+- add icon
 

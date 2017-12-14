@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import FlipMove from 'react-flip-move';
 
+import 'font-awesome/css/font-awesome.css'
 import 'bulma/css/bulma.css';
 import './App.css';
 
@@ -125,6 +126,7 @@ class App extends Component {
     /* Should make location + search forms animate on appear too */
     return (
       <div className="App">
+      <i class="fa fa-search" aria-hidden="true"></i>
         <Header
           userLocation={this.state.userLocation}
           userSearchQuery={this.state.userSearchQuery}/> {this.state.showLocationForm

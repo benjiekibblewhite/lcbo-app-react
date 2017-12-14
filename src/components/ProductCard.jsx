@@ -11,7 +11,7 @@ export default class ProductCard extends React.Component {
           </figure>
         </div>
         <div className="media-content">
-          <h2>{this.props.name}</h2>
+          <p className="title is-5">{this.props.name}</p>
           <p>{this.props.primaryCategory}</p>
           <p>{this.props.secondaryCategory}, {this.props.varietal}</p>
           <p>{this.props.style}</p>
