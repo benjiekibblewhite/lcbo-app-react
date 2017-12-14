@@ -8,7 +8,7 @@ Install sass. :-P
 x Option to change address in header
 - Option to go back to results in store view
 - Copy in header: What does this app do?
-- Movement for forms when appear/disappearn
+x Movement for forms when appear/disappearn
 - Loading animations on submit buttons
 
 

@@ -55,7 +55,7 @@ export default class UserLocationForm extends React.Component {
                         <div className="control is-expanded">
                             <input
                                 id="userAddress"
-                                className="input is-large"
+                                className="input"
                                 type="text"
                                 placeholder="Enter your address"
                                 value={this.state.userAddress}
