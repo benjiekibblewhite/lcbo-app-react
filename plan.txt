@@ -2,15 +2,14 @@ plan:
 
 Have dummy results in data.js
 use Axios for Ajax
-use bulma for mockups
-can't use bulma without sass!
+use bulma
 Install sass. :-P
 
-Option to change address in header
-Option to go back to results in store view
-Copy in header: What does this app do?
-Movement for forms when appear/disappearn
-Loading animations on submit buttons
+x Option to change address in header
+- Option to go back to results in store view
+- Copy in header: What does this app do?
+- Movement for forms when appear/disappearn
+- Loading animations on submit buttons
 
 
 
@@ -38,6 +37,6 @@ ProductCard.jsx
 x on click, callback function to show stores with product in stock
 
 StoreCard.jsx
-- on click, callback function to open new tab with google maps walking directions
-- add icon
+x on click, function to open new tab with google maps walking directions
+x add icon
 

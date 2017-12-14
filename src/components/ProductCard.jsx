@@ -6,12 +6,12 @@ export default class ProductCard extends React.Component {
     return (
       <div className="media card">
         <div className="media-left">
-          <figure className="image is-128x128">
-            <img style={{height: '100%',  width: 'auto'}} src={this.props.image} alt="Product Preview"/>
+          <figure className="image">
+            <img style={{height: '128px',  width: 'auto'}} src={this.props.image} alt="Product Preview"/>
           </figure>
         </div>
         <div className="media-content">
-          <p className="title is-5">{this.props.name}</p>
+          <h3 className="title is-5">{this.props.name}</h3>
           <p>{this.props.primaryCategory}</p>
           <p>{this.props.secondaryCategory}, {this.props.varietal}</p>
           <p>{this.props.style}</p>

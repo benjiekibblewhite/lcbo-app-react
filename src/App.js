@@ -22,6 +22,9 @@ class App extends Component {
     this.updateuserLocation = this
       .updateuserLocation
       .bind(this);
+    this.showLocationForm = this
+      .showLocationForm
+      .bind(this);
     this.getSearchResults = this
       .getSearchResults
       .bind(this);
@@ -40,6 +43,9 @@ class App extends Component {
     this.handleProductCardClick = this
       .handleProductCardClick
       .bind(this);
+    this.handleStoreCardClick = this
+      .handleStoreCardClick
+      .bind(this);
     this.state = {
       showLocationForm: true,
       showQueryForm: false,
@@ -57,8 +63,14 @@ class App extends Component {
     this.setState({userLocation: userLocation, showLocationForm: false, showQueryForm: true});
   }
 
+  showLocationForm(e) {
+    e.preventDefault();
+    console.log('yes');
+    this.setState({showLocationForm: true, showQueryForm: false});
+  }
+
   handleSearchFormSubmit(searchQuery) {
-    this.setState({userSearchQuery: searchQuery, showProductResults: true});
+    this.setState({userSearchQuery: searchQuery, showProductResults: true, showStoreResults: false});
     this.getSearchResults(searchQuery);
   }
 
@@ -74,10 +86,15 @@ class App extends Component {
   }
 
   getStoresWithProduct(productID) {
-    // Submit call to LCBO Api using Axios, get user location directly from state use
-    // storeResults for testing
+    // Submit call to LCBO Api using Axios, get user location directly from state
+    // use storeResults for testing
     const returnedStoresWithProduct = storeResults;
     this.setState({storeResults: returnedStoresWithProduct, showProductResults: false, showStoreResults: true});
+  }
+
+  handleStoreCardClick(storeAddress, storeCity) {
+    const mapURL = `https://www.google.ca/maps/dir/${this.state.userLocation},+ON/${storeAddress},${storeCity},+ON`;
+    window.open(mapURL);
   }
 
   renderProducts(searchResults) {
@@ -85,7 +102,6 @@ class App extends Component {
       return (
         <div
           key={product.id}
-          data-product-id={product.id}
           onClick={() => {
           this.handleProductCardClick(product.id)
         }}
@@ -109,14 +125,14 @@ class App extends Component {
   renderStores(storeResults) {
     return (storeResults.result.map((store) => {
       return (
-        <div key={store.id} className="column is-one-fifth">
-          <StoreCard
-            name={store.name}
-            numberInStock={store.quantity}
-            addressLineOne={store.address_line_1}
-            addressLineTwo={store.address_line_2}
-            city={store.city}
-            telephone={store.telephone}/>
+        <div
+          key={store.id}
+          className="column is-half"
+          onClick={() => {
+          this.handleStoreCardClick(store.address_line_1, store.city)
+        }}>
+          <StoreCard productUserSearchedFor={storeResults.product.name} //Will always be Strongbow while using testing data
+            name={store.name} numberInStock={store.quantity} addressLineOne={store.address_line_1} addressLineTwo={store.address_line_2} city={store.city} telephone={store.telephone}/>
         </div>
       )
     }))
@@ -126,15 +142,20 @@ class App extends Component {
     /* Should make location + search forms animate on appear too */
     return (
       <div className="App">
-      <i class="fa fa-search" aria-hidden="true"></i>
         <Header
           userLocation={this.state.userLocation}
-          userSearchQuery={this.state.userSearchQuery}/> {this.state.showLocationForm
-          ? <UserLocationForm updateuserLocation={this.updateuserLocation}/>
-          : null}
-        {this.state.showQueryForm
-          ? <UserSearchQueryForm searchFormSubmit={this.handleSearchFormSubmit}/>
-          : null}
+          userSearchQuery={this.state.userSearchQuery}
+          showLocationForm={this.showLocationForm}/>
+        <FlipMove
+          enterAnimation="elevator"
+          leaveAnimation="elevator">
+          {this.state.showLocationForm
+            ? <UserLocationForm updateuserLocation={this.updateuserLocation}/>
+            : null}
+          {this.state.showQueryForm
+            ? <UserSearchQueryForm searchFormSubmit={this.handleSearchFormSubmit}/>
+            : null}
+        </FlipMove>
         <FlipMove
           staggerDelayBy={50}
           appearAnimation="elevator"
