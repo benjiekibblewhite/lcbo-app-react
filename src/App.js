@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import FlipMove from 'react-flip-move';
+import Axios from 'axios';
 
 import 'font-awesome/css/font-awesome.css'
 import 'bulma/css/bulma.css';
@@ -77,6 +78,14 @@ class App extends Component {
   getSearchResults(searchQuery) {
     // Submit Search Query to LCBO Api using Axios (or fetch?) Store result in state
     // (use productResults for testing)
+    // https://lcboapi.com/products?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&q=" + searchQuery + "&xmlToJSON=false";
+    Axios.get(`https://lcboapi.com/products?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&q="${searchQuery}&xmlToJSON=false"`)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
     const returnedSearchResult = productResults;
     this.setState({searchResults: returnedSearchResult});
   }
