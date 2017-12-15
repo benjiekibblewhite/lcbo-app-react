@@ -18,6 +18,8 @@ x text input for address
 x onsubmit callback function
 	x concatenates address + city + ON
 x option to cancel
+- can this be a modal that pops up only when needed, rather than being the first thing you see?
+
 
 x How to remove Component when form submits?
 	x with state!!!

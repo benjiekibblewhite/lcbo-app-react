@@ -9,12 +9,9 @@ import './App.css';
 import Header from './components/Header';
 import UserLocationForm from './components/UserLocationForm';
 import UserSearchQueryForm from './components/UserSearchQueryForm';
-import ProductCard from './components/ProductCard';
-import StoreCard from './components/StoreCard';
-import ResultsHeader from './components/ResultsHeader';
+import Results from './components/Results';
 
 import storeResults from './data/storetestdata';
-import productResults from './data/producttestdata';
 
 class App extends Component {
 
@@ -39,12 +36,6 @@ class App extends Component {
     this.showStoreResults = this
       .showStoreResults
       .bind(this);
-    this.renderProducts = this
-      .renderProducts
-      .bind(this);
-    this.renderStores = this
-      .renderStores
-      .bind(this);
     this.handleSearchFormSubmit = this
       .handleSearchFormSubmit
       .bind(this);
@@ -54,14 +45,11 @@ class App extends Component {
     this.handleStoreCardClick = this
       .handleStoreCardClick
       .bind(this);
-    this.renderResultsHeader = this
-      .renderResultsHeader
-      .bind(this);
     this.state = {
       showLocationForm: true,
       showQueryForm: false,
-      showProductResults: false,
-      showStoreResults: false,
+      productResultsVisible: false,
+      storeResultsVisible: false,
       userLocation: "",
       userSearchQuery: "",
       searchResults: {},
@@ -93,7 +81,7 @@ class App extends Component {
   }
 
   showSearchResults() {
-    this.setState({showProductResults: true, showStoreResults: false});
+    this.setState({productResultsVisible: true, storeResultsVisible: false});
   }
 
   handleSearchFormSubmit(searchQuery) {
@@ -119,7 +107,7 @@ class App extends Component {
   }
 
   showStoreResults() {
-    this.setState({showProductResults: false, showStoreResults: true});
+    this.setState({productResultsVisible: false, storeResultsVisible: true});
   }
 
   handleStoreCardClick(storeAddress, storeCity) {
@@ -127,61 +115,6 @@ class App extends Component {
     window.open(mapURL);
   }
 
-  renderProducts(searchResults) {
-    return (searchResults.result.map((product) => {
-      return (
-        <div
-          key={product.id}
-          onClick={() => {
-          this.handleProductCardClick(product.id)
-        }}
-          className="column is-half">
-          <ProductCard
-            image={product.image_thumb_url}
-            name={product.name}
-            price={product.price_in_cents / 100}
-            primaryCategory={product.primary_category}
-            secondaryCategory={product.secondary_category}
-            varietal={product.varietal}
-            style={product.style}
-            producerName={product.producer_name}
-            packagingType={product.package}
-            alcoholContent={product.alcohol_content}/>
-        </div>
-      )
-    }))
-  }
-
-  renderStores(storeResults) {
-    return (storeResults.result.map((store) => {
-      return (
-        <div
-          key={store.id}
-          className="column is-half"
-          onClick={() => {
-          this.handleStoreCardClick(store.address_line_1, store.city)
-        }}>
-          <StoreCard productUserSearchedFor={storeResults.product.name} //Will always be Strongbow while using testing data
-            name={store.name} numberInStock={store.quantity} addressLineOne={store.address_line_1} addressLineTwo={store.address_line_2} city={store.city} telephone={store.telephone}/>
-        </div>
-      )
-    }))
-  }
-
-  renderResultsHeader() {
-    return (
-      <div>
-        {this.state.showProductResults
-          ? <ResultsHeader
-              query={this.state.userSearchQuery}
-              backToSearchResults={this.showSearchResults}/>
-          : <ResultsHeader
-            query={this.state.storeResults.product.name}
-            backToSearchResults={this.showSearchResults}/>
-}
-      </div>
-    )
-  }
   render() {
     /* Should make location + search forms animate on appear too */
     return (
@@ -198,20 +131,19 @@ class App extends Component {
             ? <UserSearchQueryForm searchFormSubmit={this.handleSearchFormSubmit}/>
             : null}
         </FlipMove>
-        {this.renderResultsHeader()}
-        <FlipMove
-          staggerDelayBy={50}
-          appearAnimation="elevator"
-          enterAnimation="elevator"
-          leaveAnimation="elevator"
-          className="section columns is-multiline">
-          {this.state.showProductResults
-            ? this.renderProducts(this.state.searchResults)
+        {this.state.productResultsVisible || this.state.storeResultsVisible ?
+          <Results
+              searchQuery={this.state.userSearchQuery}
+              searchResults={this.state.searchResults}
+              storeResults={this.state.storeResults}
+              handleProductCardClick={this.handleProductCardClick}
+              handleStoreCardClick={this.handleStoreCardClick}
+              productResultsVisible = {this.state.productResultsVisible}
+              storeResultsVisible = {this.state.storeResultsVisible}
+              showSearchResults={this.showSearchResults}
+              showStoreResults={this.showStoreResults}
+            />
             : null}
-          {this.state.showStoreResults
-            ? this.renderStores(this.state.storeResults)
-            : null}
-        </FlipMove>
       </div>
     );
   }
