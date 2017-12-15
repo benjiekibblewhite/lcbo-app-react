@@ -11,6 +11,7 @@ import UserLocationForm from './components/UserLocationForm';
 import UserSearchQueryForm from './components/UserSearchQueryForm';
 import ProductCard from './components/ProductCard';
 import StoreCard from './components/StoreCard';
+import ResultsHeader from './components/ResultsHeader';
 
 import storeResults from './data/storetestdata';
 import productResults from './data/producttestdata';
@@ -29,8 +30,14 @@ class App extends Component {
     this.getSearchResults = this
       .getSearchResults
       .bind(this);
+    this.showSearchResults = this
+      .showSearchResults
+      .bind(this);
     this.getStoresWithProduct = this
       .getStoresWithProduct
+      .bind(this);
+    this.showStoreResults = this
+      .showStoreResults
       .bind(this);
     this.renderProducts = this
       .renderProducts
@@ -46,6 +53,9 @@ class App extends Component {
       .bind(this);
     this.handleStoreCardClick = this
       .handleStoreCardClick
+      .bind(this);
+    this.renderResultsHeader = this
+      .renderResultsHeader
       .bind(this);
     this.state = {
       showLocationForm: true,
@@ -66,39 +76,50 @@ class App extends Component {
 
   showLocationForm(e) {
     e.preventDefault();
-    console.log('yes');
     this.setState({showLocationForm: true, showQueryForm: false});
   }
 
+  getSearchResults(searchQuery) {
+    Axios
+      .get(`https://lcboapi.com/products?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&q="${searchQuery}&xmlToJSON=false"`)
+      .then((response) => {
+        const returnedSearchResult = response.data;
+        this.setState({searchResults: returnedSearchResult});
+        this.showSearchResults();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  showSearchResults() {
+    this.setState({showProductResults: true, showStoreResults: false});
+  }
+
   handleSearchFormSubmit(searchQuery) {
-    this.setState({userSearchQuery: searchQuery, showProductResults: true, showStoreResults: false});
+    this.setState({userSearchQuery: searchQuery});
     this.getSearchResults(searchQuery);
   }
 
-  getSearchResults(searchQuery) {
-    // Submit Search Query to LCBO Api using Axios (or fetch?) Store result in state
-    // (use productResults for testing)
-    // https://lcboapi.com/products?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&q=" + searchQuery + "&xmlToJSON=false";
-    Axios.get(`https://lcboapi.com/products?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&q="${searchQuery}&xmlToJSON=false"`)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    const returnedSearchResult = productResults;
-    this.setState({searchResults: returnedSearchResult});
-  }
-
   handleProductCardClick(productId) {
-    this.getStoresWithProduct(this.state.userLocation, productId)
+    this.getStoresWithProduct(productId)
   }
 
   getStoresWithProduct(productID) {
-    // Submit call to LCBO Api using Axios, get user location directly from state
-    // use storeResults for testing
-    const returnedStoresWithProduct = storeResults;
-    this.setState({storeResults: returnedStoresWithProduct, showProductResults: false, showStoreResults: true});
+    Axios
+      .get(`https://lcboapi.com/stores?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&geo=${this.state.userLocation}&product_id=${productID}`)
+      .then((response) => {
+        const returnedStoreResult = response.data;
+        this.setState({storeResults: returnedStoreResult});
+        this.showStoreResults();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  showStoreResults() {
+    this.setState({showProductResults: false, showStoreResults: true});
   }
 
   handleStoreCardClick(storeAddress, storeCity) {
@@ -147,6 +168,20 @@ class App extends Component {
     }))
   }
 
+  renderResultsHeader() {
+    return (
+      <div>
+        {this.state.showProductResults
+          ? <ResultsHeader
+              query={this.state.userSearchQuery}
+              backToSearchResults={this.showSearchResults}/>
+          : <ResultsHeader
+            query={this.state.storeResults.product.name}
+            backToSearchResults={this.showSearchResults}/>
+}
+      </div>
+    )
+  }
   render() {
     /* Should make location + search forms animate on appear too */
     return (
@@ -155,9 +190,7 @@ class App extends Component {
           userLocation={this.state.userLocation}
           userSearchQuery={this.state.userSearchQuery}
           showLocationForm={this.showLocationForm}/>
-        <FlipMove
-          enterAnimation="elevator"
-          leaveAnimation="elevator">
+        <FlipMove enterAnimation="accordionVertical" leaveAnimation="accordionVertical">
           {this.state.showLocationForm
             ? <UserLocationForm updateuserLocation={this.updateuserLocation}/>
             : null}
@@ -165,6 +198,7 @@ class App extends Component {
             ? <UserSearchQueryForm searchFormSubmit={this.handleSearchFormSubmit}/>
             : null}
         </FlipMove>
+        {this.renderResultsHeader()}
         <FlipMove
           staggerDelayBy={50}
           appearAnimation="elevator"
