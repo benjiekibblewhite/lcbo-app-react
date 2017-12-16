@@ -16,9 +16,6 @@ export default class Results extends React.Component {
         this.handleProductCardClick = this
             .handleProductCardClick
             .bind(this);
-        this.renderProductResult = this
-            .renderProductResult
-            .bind(this);
         this.renderStores = this
             .renderStores
             .bind(this);
@@ -90,13 +87,6 @@ export default class Results extends React.Component {
             .showSearchResults()
     }
 
-    renderProductResult() {
-        return (
-            <React.Fragment>
-                {this.renderProducts(this.props.searchResults)}
-            </React.Fragment>
-        )
-    }
 
     render() {
         return (
