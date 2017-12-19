@@ -1,10 +1,30 @@
-// get Total Pages
-// get current page
-// always display 1st and last page
-// if more than 5, only display 1st, the one before current, the current, the one after current, and the last page
-// so 1 .. 4, 5, 6, ... 33, for example
-// or 1, 2, 3, .... 33
-// if is_first_page = true, return 1, 2, 3
-//if total_page = last returned, skip, otherwise, return last page
-//
+import React from 'react';
+import Paginator from 'paginator';
 
+
+export default class Pagination extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.generatePagination = this
+            .generatePagination
+            .bind(this);
+    }
+
+    generatePagination(results) {
+        const recordsPerPage = results.records_per_page;
+        const paginator = new Paginator(recordsPerPage, 5);
+        const paginatorInfo = paginator.build(results.total_record_count, results.current_page)
+
+
+        console.log(paginatorInfo);
+    }
+
+    render() {
+        return (
+            <div>
+                {this.generatePagination(this.props.results)}
+            </div>
+        )
+    }
+}
