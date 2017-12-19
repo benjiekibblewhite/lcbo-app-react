@@ -66,6 +66,8 @@ class App extends Component {
     e.preventDefault();
     this.setState({showLocationForm: true, showQueryForm: false});
   }
+//change this and getStoreResults. Have functions that instead generate URLs,
+//and have a single function that makes the Axios call
 
   getSearchResults(searchQuery) {
     Axios
