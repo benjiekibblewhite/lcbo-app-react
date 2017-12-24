@@ -105,7 +105,6 @@ export default class Results extends React.Component {
                 {this.props.productResultsVisible
                     ? this.renderProducts(this.props.searchResults)
                     : null}
-
                 {this.props.productResultsVisible
                     ? <Pagination
                         results={this.props.searchResults.pager}
