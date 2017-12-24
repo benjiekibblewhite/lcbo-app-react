@@ -5,7 +5,6 @@ import ProductCard from './ProductCard';
 import StoreCard from './StoreCard';
 import ProductResultsHeader from './ProductResultsHeader';
 import StoreResultsHeader from './StoreResultsHeaader';
-import Pagination from './Pagination';
 
 export default class Results extends React.Component {
     constructor(props) {
@@ -105,11 +104,7 @@ export default class Results extends React.Component {
                 {this.props.productResultsVisible
                     ? this.renderProducts(this.props.searchResults)
                     : null}
-                {this.props.productResultsVisible
-                    ? <Pagination
-                        results={this.props.searchResults.pager}
-                         />
-                    : null}
+
                 {this.props.storeResultsVisible
                     ? <StoreResultsHeader
                             handleBackToSearchResultsClick={this.props.showSearchResults}
@@ -118,11 +113,7 @@ export default class Results extends React.Component {
                 {this.props.storeResultsVisible
                     ? this.renderStores(this.props.storeResults)
                     : null}
-                {this.props.storeResultsVisible
-                    ? <Pagination
-                        results={this.props.storeResults.pager}
-                            />
-                    : null}
+
             </FlipMove>
         )
     }
