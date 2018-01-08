@@ -74,7 +74,7 @@ class App extends Component {
 
   getSearchResults(searchQuery, pageNumber) {
     Axios
-      .get(`https://lcboapi.com/products?access_key=MDpmZTkxZWU2NC1mNDkzLTExZTctYjMzYi1kYjBkYWI3YzM0Yzc6dnRwQWtpRU5YenFERUt0SUUxQjdkTGFtWDQxcTdrdVVwRjFn&per_page=10&q="${searchQuery}&xmlToJSON=false"&page=${pageNumber}`)
+      .get(`https://lcboapi.com/products?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&q="${searchQuery}&xmlToJSON=false"&page=${pageNumber}`)
       .then((response) => {
         const returnedSearchResult = response.data;
         this.setState({searchResults: returnedSearchResult});
@@ -100,7 +100,7 @@ class App extends Component {
 
   getStoresWithProduct(productID, pageNumber) {
     Axios
-      .get(`https://lcboapi.com/stores?access_key=MDpmZTkxZWU2NC1mNDkzLTExZTctYjMzYi1kYjBkYWI3YzM0Yzc6dnRwQWtpRU5YenFERUt0SUUxQjdkTGFtWDQxcTdrdVVwRjFn&geo=${this.state.userLocation}&product_id=${productID}&page=${pageNumber}`)
+      .get(`https://lcboapi.com/stores?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&geo=${this.state.userLocation}&product_id=${productID}&page=${pageNumber}`)
       .then((response) => {
         const returnedStoreResult = response.data;
         this.setState({storeResults: returnedStoreResult});
