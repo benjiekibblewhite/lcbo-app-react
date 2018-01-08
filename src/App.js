@@ -10,8 +10,8 @@ import Header from './components/Header';
 import UserLocationForm from './components/UserLocationForm';
 import UserSearchQueryForm from './components/UserSearchQueryForm';
 import Results from './components/Results';
+import Pagination from './components/Pagination';
 
-import storeResults from './data/storetestdata';
 
 class App extends Component {
 
@@ -45,6 +45,9 @@ class App extends Component {
     this.handleStoreCardClick = this
       .handleStoreCardClick
       .bind(this);
+    this.handlePageClick = this
+      .handlePageClick
+      .bind(this);
     this.state = {
       showLocationForm: true,
       showQueryForm: false,
@@ -53,7 +56,7 @@ class App extends Component {
       userLocation: "",
       userSearchQuery: "",
       searchResults: {},
-      storeResults: storeResults
+      storeResults: {}
     };
   }
 
@@ -66,10 +69,12 @@ class App extends Component {
     e.preventDefault();
     this.setState({showLocationForm: true, showQueryForm: false});
   }
+  // change this and getStoreResults. Have functions that instead generate URLs,
+  // and have a single function that makes the Axios call
 
-  getSearchResults(searchQuery) {
+  getSearchResults(searchQuery, pageNumber) {
     Axios
-      .get(`https://lcboapi.com/products?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&q="${searchQuery}&xmlToJSON=false"`)
+      .get(`https://lcboapi.com/products?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&q="${searchQuery}&xmlToJSON=false"&page=${pageNumber}`)
       .then((response) => {
         const returnedSearchResult = response.data;
         this.setState({searchResults: returnedSearchResult});
@@ -86,16 +91,16 @@ class App extends Component {
 
   handleSearchFormSubmit(searchQuery) {
     this.setState({userSearchQuery: searchQuery});
-    this.getSearchResults(searchQuery);
+    this.getSearchResults(searchQuery, 1);
   }
 
   handleProductCardClick(productId) {
-    this.getStoresWithProduct(productId)
+    this.getStoresWithProduct(productId, 1);
   }
 
-  getStoresWithProduct(productID) {
+  getStoresWithProduct(productID, pageNumber) {
     Axios
-      .get(`https://lcboapi.com/stores?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&geo=${this.state.userLocation}&product_id=${productID}`)
+      .get(`https://lcboapi.com/stores?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&geo=${this.state.userLocation}&product_id=${productID}&page=${pageNumber}`)
       .then((response) => {
         const returnedStoreResult = response.data;
         this.setState({storeResults: returnedStoreResult});
@@ -115,6 +120,14 @@ class App extends Component {
     window.open(mapURL);
   }
 
+  handlePageClick(pageNumber, type) {
+    if (type === "prod") {
+      this.getSearchResults(this.state.userSearchQuery, pageNumber)
+    } else if (type === "store") {
+      this.getStoresWithProduct(this.state.storeResults.product.id, pageNumber);
+    }
+  }
+
   render() {
     /* Should make location + search forms animate on appear too */
     return (
@@ -131,19 +144,31 @@ class App extends Component {
             ? <UserSearchQueryForm searchFormSubmit={this.handleSearchFormSubmit}/>
             : null}
         </FlipMove>
-        {this.state.productResultsVisible || this.state.storeResultsVisible ?
-          <Results
+        {this.state.productResultsVisible || this.state.storeResultsVisible
+          ? <Results
               searchQuery={this.state.userSearchQuery}
               searchResults={this.state.searchResults}
               storeResults={this.state.storeResults}
               handleProductCardClick={this.handleProductCardClick}
               handleStoreCardClick={this.handleStoreCardClick}
-              productResultsVisible = {this.state.productResultsVisible}
-              storeResultsVisible = {this.state.storeResultsVisible}
+              productResultsVisible={this.state.productResultsVisible}
+              storeResultsVisible={this.state.storeResultsVisible}
               showSearchResults={this.showSearchResults}
-              showStoreResults={this.showStoreResults}
-            />
-            : null}
+              showStoreResults={this.showStoreResults}/>
+          : null}
+        {this.state.productResultsVisible
+          ? <Pagination
+              results={this.state.searchResults.pager}
+              handlePageClick={this.handlePageClick}
+              type="prod"
+              />
+          : null}
+        {this.state.storeResultsVisible
+          ? <Pagination
+              results={this.state.storeResults.pager}
+              handlePageClick={this.handlePageClick}
+              type="store"/>
+          : null}
       </div>
     );
   }

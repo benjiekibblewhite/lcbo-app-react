@@ -87,7 +87,6 @@ export default class Results extends React.Component {
             .showSearchResults()
     }
 
-
     render() {
         return (
             <FlipMove
@@ -105,6 +104,7 @@ export default class Results extends React.Component {
                 {this.props.productResultsVisible
                     ? this.renderProducts(this.props.searchResults)
                     : null}
+
                 {this.props.storeResultsVisible
                     ? <StoreResultsHeader
                             handleBackToSearchResultsClick={this.props.showSearchResults}
