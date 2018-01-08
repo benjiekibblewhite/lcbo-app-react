@@ -5,12 +5,12 @@ use Axios for Ajax
 use bulma
 
 x Option to change address in header
-- Option to go back to results in store view
+x Option to go back to results in store view
 - Copy in header: What does this app do?
 x Movement for forms when appear/disappearn
 - Loading animations on submit buttons
 - suggestions when search result empty - on click, submit search with that suggestion
-- turn results into their own components, then render cards inside of that component
+x turn results into their own components, then render cards inside of that component
 
 User Location Form.jsx
 x cities in Array
