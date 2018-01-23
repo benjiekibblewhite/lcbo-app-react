@@ -74,7 +74,7 @@ class App extends Component {
 
   getSearchResults(searchQuery, pageNumber) {
     Axios
-      .get(`https://lcboapi.com/products?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&q="${searchQuery}&xmlToJSON=false"&page=${pageNumber}`)
+      .get(`https://lcboapi.com/products?access_key=${process.env.REACT_APP_API_KEY}&per_page=10&q="${searchQuery}&xmlToJSON=false"&page=${pageNumber}`)
       .then((response) => {
         const returnedSearchResult = response.data;
         this.setState({searchResults: returnedSearchResult});
@@ -100,7 +100,7 @@ class App extends Component {
 
   getStoresWithProduct(productID, pageNumber) {
     Axios
-      .get(`https://lcboapi.com/stores?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&geo=${this.state.userLocation}&product_id=${productID}&page=${pageNumber}`)
+      .get(`https://lcboapi.com/stores?access_key=${process.env.REACT_APP_API_KEY}&per_page=10&geo=${this.state.userLocation}&product_id=${productID}&page=${pageNumber}`)
       .then((response) => {
         const returnedStoreResult = response.data;
         this.setState({storeResults: returnedStoreResult});
@@ -122,7 +122,7 @@ class App extends Component {
 
   handlePageClick(pageNumber, type) {
     if (type === "prod") {
-      this.getSearchResults(this.state.userSearchQuery, pageNumber)
+      this.getSearchResults(this.state.userSearchQuery, pageNumber);
     } else if (type === "store") {
       this.getStoresWithProduct(this.state.storeResults.product.id, pageNumber);
     }
