@@ -91,9 +91,9 @@ export default class Results extends React.Component {
         return (
             <FlipMove
                 staggerDelayBy={50}
-                appearAnimation="elevator"
-                enterAnimation="elevator"
-                leaveAnimation="elevator"
+                appearAnimation="fade"
+                enterAnimation="fade"
+                leaveAnimation="fade"
                 className="section columns is-multiline">
 
                 {this.props.productResultsVisible

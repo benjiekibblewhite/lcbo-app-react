@@ -100,7 +100,7 @@ class App extends Component {
 
   getStoresWithProduct(productID, pageNumber) {
     Axios
-      .get(`https://lcboapi.com/stores?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&geo=${this.state.userLocation}&product_id=${productID}&page=${pageNumber}`)
+      .get(`https://lcboapi.com/stores?access_key=MDphNjhjOWViOC05MDBiLTExZTctYjA3Mi02YjJjM2VjNGE5OTQ6WHJtUXYwUFRCaGFEMzh3NTVTbzFacnJEc3YyQjg3WmVEMXZN&per_page=10&geo=${this.state.userLocation}&product_id=${productID}&page=${pageNumber}`)
       .then((response) => {
         const returnedStoreResult = response.data;
         this.setState({storeResults: returnedStoreResult});

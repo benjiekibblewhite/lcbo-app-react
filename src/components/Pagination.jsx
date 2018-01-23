@@ -47,6 +47,7 @@ export default class Pagination extends React.Component {
         const totalPagesHigherThanPageToBeAdded = paginatorInfo.last_page !== paginatorInfo.total_pages - 1;
         const shouldAddExtraPage = onSecondPage && morePagesAvailable && totalPagesHigherThanPageToBeAdded;
         const firstPageIsNotShown = paginatorInfo.first_page !== 1;
+        
         if (shouldAddExtraPage) {
             //add it
             paginationArray.push({
@@ -71,12 +72,13 @@ export default class Pagination extends React.Component {
         const notOnFirstPage = paginatorInfo.current_page !== 1;
         const lastPageIsNotSecondPage = paginatorInfo.last_page !== 2;
         const shouldAddFirstEllipsis = notOnFirstPage && lastPageIsNotSecondPage && paginationArray.length > 4;
-
+        const fivepagestotal = paginatorInfo.last_page == 5;
+        
         if (shouldAddFirstEllipsis) {
             paginationArray.splice(1, 0, ellipsis);
         }
 
-        if (morePagesAvailable) {
+        if (morePagesAvailable || fivepagestotal) {
             //take total length, and reduce, remembering that indexes start at 0
             const secondToLast = paginationArray.length - 1;
             paginationArray.splice(secondToLast, 0, ellipsis);

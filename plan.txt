@@ -5,12 +5,14 @@ use Axios for Ajax
 use bulma
 
 x Option to change address in header
-- Option to go back to results in store view
+x Option to go back to results in store view
 - Copy in header: What does this app do?
 x Movement for forms when appear/disappearn
 - Loading animations on submit buttons
 - suggestions when search result empty - on click, submit search with that suggestion
-- turn results into their own components, then render cards inside of that component
+x turn results into their own components, then render cards inside of that component
+
+- should i be using routing to manage displays? 
 
 User Location Form.jsx
 x cities in Array
@@ -32,8 +34,8 @@ x submit calls function to render Product Cards
 
 
 Prev/Next buttons
-- renders previous/next set of cards from json response
-- can share same code - pass storeResults or productResults as "results". Then it's results.pager.previous_page or next_page
+x renders previous/next set of cards from json response
+x can share same code - pass storeResults or productResults as "results". Then it's results.pager.previous_page or next_page
 
 ProductCard.jsx
 x on click, callback function to show stores with product in stock
