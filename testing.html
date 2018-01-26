@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,700,800,900|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/7.0.0/normalize.css">
+</head>
+
+<body>
+    <style>
+        body {
+            background: white;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            width: 80vw;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .front-page_header {
+            font-family: Raleway;
+            font-weight: 500;
+            font-size: 64px;
+            letter-spacing: 1px;
+        }
+        
+        .front-page_description {
+            font-family: Roboto;
+            margin-bottom: 24px;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .button {
+            margin: 24px 0 56px;
+            font-size: 24px;
+            background-color: black;
+            color: white;
+            border: none;
+            font-family: Raleway;
+            font-weight: 200;
+            border-radius: 16px;
+            letter-spacing: 1px;
+            padding: 8px 32px;
+            transition: box-shadow 0.1s ease;
+            cursor: pointer;
+        }
+
+        .button:hover,
+        .button:focus {
+            box-shadow: #444 0 0 4px 0;
+        }
+
+        .button:active {
+            transform: scale(0.98);
+        }
+
+        .input {
+            font-size: 32px;
+            max-width: 80%;
+            font-family: Roboto;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            border-radius: 15px;
+            border: 2px #ccc solid;
+            transition: box-shadow 0.1s ease, border-color 0.1s ease;
+            text-align: center;
+        }
+
+        .input:hover {
+            box-shadow: #ccc 0 0 4px 0;
+        }
+
+        .input:focus {
+            box-shadow: lightcoral 0 0 8px 0;
+            border-color: lightcoral;
+        }
+
+        .select {
+            display: inline-block;
+            max-width: 100%;
+            position: relative;
+            vertical-align: top;
+        }
+
+        .select select {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            -ms-flex-align: center;
+            align-items: center;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            height: 2.25em;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            line-height: 1.5;
+            padding-bottom: calc(0.375em - 1px);
+            padding-left: calc(0.625em - 1px);
+            padding-right: calc(0.625em - 1px);
+            padding-top: calc(0.375em - 1px);
+            position: relative;
+            vertical-align: top;
+            background-color: white;
+            border-color: #ccc;
+            color: #363636;
+            cursor: pointer;
+            display: block;
+            font-size: 1em;
+            max-width: 100%;
+            outline: none;
+            
+        }
+        
+
+        .select:not(.is-multiple)::after {
+            border: 1px solid black;
+            border-right: 0;
+            border-top: 0;
+            content: " ";
+            display: block;
+            height: 0.5em;
+            pointer-events: none;
+            position: absolute;
+            -webkit-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            -webkit-transform-origin: center;
+            -ms-transform-origin: center;
+            transform-origin: center;
+            width: 0.5em;
+            margin-top: -0.375em;
+            right: 1.125em;
+            top: 50%;
+            z-index: 4;
+        }
+        
+        .header {
+            background-color: black;
+            padding: 40px;
+            height: 96px;
+        }
+        
+        .header .logo {
+            color: white;
+            font-family: Raleway;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+    </style>
+    <div class="header">
+        <div class="logo">
+            Boozehound
+        </div>
+    </div>
+    <div class="wrapper">
+        <h1 class="front-page_header">Boozehound</h1>
+        <p class="front-page_description">Boozehound helps you find LCBO stores close to you that have your favourite products in stock. No more trudging through the snow to find that your local doesn't have what you were looking for!</p>
+        <input name="address" type="text" class="input" placeholder="Enter street address">
+        <div class="select"><select id="userCity"><option value="Toronto">Toronto</option><option value="Barrie">Barrie</option><option value="Belleville">Belleville</option><option value="Brampton">Brampton</option><option value="Brantford">Brantford</option><option value="Brockville">Brockville</option><option value="Burlington">Burlington</option><option value="Cambridge">Cambridge</option><option value="Chatham-Kent">Chatham-Kent</option><option value="Clarence-Rockland">Clarence-Rockland</option><option value="Cornwall">Cornwall</option><option value="County of Brant">County of Brant</option><option value="Dryden">Dryden</option><option value="Elliot Lake">Elliot Lake</option><option value="Greater Sudbury">Greater Sudbury</option><option value="Guelph">Guelph</option><option value="Haldiman County">Haldiman County</option><option value="Hamilton">Hamilton</option><option value="Kawartha Lakes">Kawartha Lakes</option><option value="Kenora">Kenora</option><option value="Kingston">Kingston</option><option value="Kitchener">Kitchener</option><option value="London">London</option><option value="Markham">Markham</option><option value="Mississauga">Mississauga</option><option value="Niagara Falls">Niagara Falls</option><option value="Norfolk County">Norfolk County</option><option value="North Bay">North Bay</option><option value="Orillia">Orillia</option><option value="Oshawa">Oshawa</option><option value="Ottawa">Ottawa</option><option value="Owen Sound">Owen Sound</option><option value="Pembroke">Pembroke</option><option value="Peterborough">Peterborough</option><option value="Pickering">Pickering</option><option value="Port Colborne">Port Colborne</option><option value="Quinte West">Quinte West</option><option value="Sarnia">Sarnia</option><option value="Sault Ste. Marie">Sault Ste. Marie</option><option value="St Chatarines">St Chatarines</option><option value="St. Thomas">St. Thomas</option><option value="Stratford">Stratford</option><option value="Temiskaming Shores">Temiskaming Shores</option><option value="Thorold">Thorold</option><option value="Thunder Bay">Thunder Bay</option><option value="Timmins">Timmins</option><option value="Vaughn">Vaughn</option><option value="Waterloo">Waterloo</option><option value="Windor">Windor</option><option value="Woodstock">Woodstock</option></select></div>
+        <button class="button">
+            Submit
+        </button>
+    </div>
+</body>
+
+</html>
