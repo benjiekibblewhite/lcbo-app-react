@@ -1,0 +1,20 @@
+@import '../styles/scss/theme.scss';
+
+.largetextinput {
+    font-size: 32px;
+    max-width: 80%;
+    font-family: Roboto;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+    border-radius: 15px;
+    border: 2px #ccc solid;
+    transition: box-shadow 0.1s ease, border-color 0.1s ease;
+    text-align: center;
+    &:hover {
+        box-shadow: #ccc 0 0 4px 0;
+    }
+    &:focus {
+        box-shadow: lightcoral 0 0 8px 0;
+        border-color: lightcoral
+    }
+}

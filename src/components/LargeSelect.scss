@@ -1,0 +1,15 @@
+@import '../styles/scss/theme.scss';
+
+.largeselect {
+    select {
+        border-color: #ccc;
+
+        &:not(.is-multiple)::after {
+            border-color: black;
+        }
+
+        &:hover:after {
+            border-color: tomato;
+        }
+    }
+}
