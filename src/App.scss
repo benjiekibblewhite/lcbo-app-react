@@ -1,0 +1,10 @@
+@import '../scss/main.scss'
+
+body {
+    font-family: $base-font;
+}
+
+.column .card {
+    height: 100%;
+    padding: 2rem;
+}
