@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Route, Switch } from 'react-router';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from './Header';
 
@@ -12,7 +11,6 @@ import StoreResults from './routes/StoreResults';
 
 import './App.scss';
 
-const history = createBrowserHistory();
 
 
 class App extends Component {
@@ -27,32 +25,37 @@ class App extends Component {
   }
 
   render() {
-    const renderMergedProps = (component, ...rest) => {
-      const finalProps = Object.assign({}, ...rest);
-      return (
-        React.createElement(component, finalProps)
-      );
-    }
-    const PropsRoute = ({ component, ...rest }) => {
-      return (
-        <Route {...rest} render={routeProps => {
+      const renderMergedProps = (component, ...rest) => {
+        const finalProps = Object.assign({}, ...rest);
+        return (
+          React.createElement(component, finalProps)
+        );
+      }
+      const PropsRoute = ({ component, ...rest }) => {
+        return (
+          <Route {...rest} render={routeProps => {
       return renderMergedProps(component, routeProps, rest);
     }}/>
-      );
-    }
+        );
+      }
 
-    return (
-      <div>
-        <Header />
-        <Router history={history}>
-          <Switch>
-            <Route exact path="/" component={LandingPage} />
-            <Route path="/search" component={Search} />
-            <Route path="/update-address" component={AddressForm} />
-            <PropsRoute path="/products/:query/:page_num?" component={ProductResults} userAddress={this.state.userAddress} />
-            <PropsRoute path="/stores/:product_id/:page_num?" component={StoreResults} userAddress={this.state.userAddress} />
-          </Switch>
-        </Router>
+      return (
+          <div>
+      <BrowserRouter>
+      <div className="container">
+        <Header 
+        searchQuery={this.state.searchQuery}
+        userAddress={this.state.userAddress}
+        />
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <Route path="/search" component={Search} />
+              <Route path="/update-address" component={AddressForm} />
+              <PropsRoute path="/products/:query/:page_num?" component={ProductResults} userAddress={this.state.userAddress} />
+              <PropsRoute path="/stores/:product_id/:page_num?" component={StoreResults} userAddress={this.state.userAddress} />
+            </Switch>
+          </div>
+        </BrowserRouter>
       </div>
     );
   }

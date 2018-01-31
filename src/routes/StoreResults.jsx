@@ -8,7 +8,7 @@ export default class StoreResults extends React.Component {
         
         return(
             <div>
-                <h1>Success!{params.product_id}</h1>
+                <h1>Products!{params.product_id}</h1>
                 <p>{this.props.userAddress}</p>
             </div>
             );

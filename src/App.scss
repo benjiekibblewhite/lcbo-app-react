@@ -1,10 +1,19 @@
-@import '../scss/main.scss'
+@import url('https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css');
 
-body {
-    font-family: $base-font;
+@import './styles/scss/theme.scss';
+
+html {
+    font-size: 16px;
 }
 
-.column .card {
-    height: 100%;
-    padding: 2rem;
+body {
+    font-family: $family-base;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: $family-heading;
+}
+
+strong {
+    color: inherit;
 }

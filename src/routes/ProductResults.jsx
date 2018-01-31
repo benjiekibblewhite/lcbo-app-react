@@ -1,15 +1,15 @@
 import React from 'react';
-import './ProductResults.scss';
+import styles from  './ProductResults.scss';
 
 export default class ProductResults extends React.Component {
     
     render() {
         
-        const params = this.props.match.params
+        const params = this.props.match.params;
         
         return(
-            <div>
-                <h1>Success!{params.query}</h1>
+            <div className="section">
+                <h1>Success! <span className={styles.query}>{params.query}</span></h1>
             </div>
             );
     }
