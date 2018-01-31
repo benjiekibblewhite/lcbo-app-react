@@ -1,10 +1,23 @@
+@import '../styles/scss/theme.scss';
+
 .landing-page_wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     max-width: 752px;
     margin: 0 auto;
     padding: 0 24px;
     text-align: center;
+}
+
+.landing-page_header {
+    font-family: Raleway;
+    font-weight: 500;
+    font-size: 64px;
+    letter-spacing: 1px;
+    color: black;
+}
+
+.landing-page_description {
+    font-family: Roboto;
+    margin-bottom: 24px;
+    font-size: 16px;
+    line-height: 24px;
 }

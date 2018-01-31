@@ -7,10 +7,14 @@ export default class LargeSelect extends React.Component {
             return <option key={index} value={option}>{option}</option>; 
         });
         return (
-            <div className="select largeselect">
-               <select>
-                    {renderOptions(this.props.options)}
-               </select>
+            <div className="field">
+                 <div className="control">
+                    <div className="select largeselect">
+                       <select>
+                            {renderOptions(this.props.options)}
+                       </select>
+                   </div>
+               </div>
            </div>
 
         );
