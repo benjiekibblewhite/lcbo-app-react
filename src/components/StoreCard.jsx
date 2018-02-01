@@ -8,11 +8,11 @@ export default class StoreCard extends React.Component {
             <React.Fragment>
                 <div className="media-content">
                     <h3 className="title is-6">{this.props.name}</h3>
-                    <p>Number of {this.props.productUserSearchedFor} in Stock: <strong>{this.props.numberInStock}</strong></p>
-                    <p>{this.props.addressLineOne}</p>
-                    <p>{this.props.addressLineTwo}</p>
-                    <p>{this.props.city}</p>
-                    <p>{this.props.telephone}</p>
+                    <p className="card_details">Number of {this.props.productUserSearchedFor} in Stock: <strong>{this.props.numberInStock}</strong></p>
+                    <p className="card_details">{this.props.addressLineOne}</p>
+                    <p className="card_details">{this.props.addressLineTwo}</p>
+                    <p className="card_details">{this.props.city}</p>
+                    <p className="card_details">{this.props.telephone}</p>
                 </div>
                 <div className="media-right">
                     <figure className="image is-128x128">
