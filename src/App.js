@@ -25,8 +25,8 @@ class App extends Component {
       .bind(this);
 
     this.state = {
-      searchQuery: '',
-      userAddress: ''
+      searchQuery: 'cider',
+      userAddress: '241 spadina ave, toronto'
     };
   }
 
@@ -35,7 +35,6 @@ class App extends Component {
   }
 
   handleSearchFormSubmit(searchQuery) {
-    console.log(searchQuery)
     this.setState({searchQuery: searchQuery})
   }
 
@@ -81,7 +80,8 @@ class App extends Component {
               <PropsRoute
                 path="/products/:query/:page_num?"
                 component={ProductResults}
-                userAddress={this.state.userAddress}/>
+                userAddress={this.state.userAddress}
+                />
               <PropsRoute
                 path="/stores/:product_id/:page_num?"
                 component={StoreResults}
