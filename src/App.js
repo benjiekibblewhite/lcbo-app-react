@@ -25,8 +25,8 @@ class App extends Component {
       .bind(this);
 
     this.state = {
-      searchQuery: 'cider',
-      userAddress: '241 spadina ave, toronto'
+      searchQuery: '',
+      userAddress: ''
     };
   }
 
