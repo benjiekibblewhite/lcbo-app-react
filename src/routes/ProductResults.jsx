@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import Card from '../components/Card';
 import Loader from 'react-loader-spinner';
+import ResultsData from '../components/ResultsData';
+import Pagination from 'react-router-pagination-bulma';
+
+
 
 import './ProductResults.scss';
 
@@ -10,17 +14,20 @@ export default class ProductResults extends React.Component {
     constructor(props) {
         super(props);
 
-        this.renderResults = this
-            .renderResults
+        this.renderCards = this
+            .renderCards
             .bind(this);
         this.handleProductCardClick = this
             .handleProductCardClick
+            .bind(this);
+        this.renderResultsView = this
+            .renderResultsView
             .bind(this);
 
         this.state = {
             resultsReceived: false,
             searchResults: {},
-        }
+        };
     }
 
     componentDidMount() {
@@ -39,7 +46,7 @@ export default class ProductResults extends React.Component {
             });
     }
 
-    renderResults(searchResults) {
+    renderCards(searchResults) {
         const productNotFound = searchResults.suggestion;
         if (productNotFound) {
             return `Did you mean ${searchResults.suggestion}`;
@@ -72,21 +79,37 @@ export default class ProductResults extends React.Component {
         }
     }
 
+    renderResultsView(searchResults) {
+        return (
+            <div className="section">
+                <ResultsData 
+                    left_text={`${searchResults.pager.total_record_count} results returned.`} 
+                    right_text="Click on product to see stores with item in stock"
+                    />
+                <div className="columns is-multiline">
+                    {this.renderCards(searchResults)}
+                </div>
+                <Pagination
+                  totalPages={12}
+                  pageNumber={1}
+                  spread={5}
+                />
+            </div>
+        );
+    }
+
     handleProductCardClick(productID) {
         this.props.history.push(`stores/${productID}`);
     }
 
     render() {
         return (
-            <div className="section columns is-multiline">
-               { this.state.resultsReceived ?
-                    this.renderResults(this.state.searchResults)
-                : <div className="centered-block">
+            this.state.resultsReceived ?
+            this.renderResultsView(this.state.searchResults) :
+            <div className="centered-block">
                         <p>Loading...</p> 
                         <Loader type="Oval" color="#4a4a4a" height={50} width={50} />
                     </div>
-                }
-       </div>
         );
     }
 }

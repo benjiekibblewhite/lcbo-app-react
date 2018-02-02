@@ -2,6 +2,7 @@ import React from 'react';
 import Axios from 'axios';
 import Card from '../components/Card';
 import Loader from 'react-loader-spinner';
+import ResultsData from '../components/ResultsData';
 
 import './StoreResults.scss';
 
@@ -9,13 +10,15 @@ export default class StoreResults extends React.Component {
     constructor(props) {
         super(props);
 
-        this.renderResults = this
-            .renderResults
+        this.renderCards = this
+            .renderCards
             .bind(this);
         this.handleStoreCardClick = this
             .handleStoreCardClick
             .bind(this);
-
+        this.renderResultsView = this
+            .renderResultsView
+            .bind(this);
         this.state = {
             resultsReceived: false,
             storeResults: {},
@@ -39,7 +42,11 @@ export default class StoreResults extends React.Component {
 
     }
 
-    renderResults(storeResults) {
+    handleStoreCardClick(storeAddress, storeCity) {
+        const mapURL = `https://www.google.ca/maps/dir/${this.props.userAddress},+ON/${storeAddress},${storeCity},+ON`;
+        window.open(mapURL);
+    }
+    renderCards(storeResults) {
         const itemNotInStock = storeResults.result.length === 0;
         if (itemNotInStock) {
             return `No stores have ${storeResults.product.name} in stock.`;
@@ -67,22 +74,30 @@ export default class StoreResults extends React.Component {
         }
     }
 
-    handleStoreCardClick(storeAddress, storeCity) {
-        const mapURL = `https://www.google.ca/maps/dir/${this.props.userAddress},+ON/${storeAddress},${storeCity},+ON`;
-        window.open(mapURL);
+    renderResultsView(storeResults) {
+        return (
+            <div className="section">
+                <ResultsData 
+                    stores
+                    left_text={`${storeResults.pager.total_record_count} results returned.`} 
+                    right_text="Click on store to see directions in Google Maps."
+                    />
+                <div className="columns is-multiline">
+                    {this.renderCards(storeResults)}
+                </div>
+            </div>
+        );
     }
 
     render() {
-        return (
-            <div className="section columns is-multiline">
-               { this.state.resultsReceived ?
-                    this.renderResults(this.state.storeResults)
+        return ( this.state.resultsReceived ?
+                    this.renderResultsView(this.state.storeResults)
                 : <div className="centered-block">
                         <p>Loading...</p> 
                         <Loader type="Oval" color="#4a4a4a" height={50} width={50} />
                     </div>
-                }
-       </div>
+                
+
         );
     }
 }
