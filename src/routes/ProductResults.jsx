@@ -4,7 +4,6 @@ import Axios from 'axios';
 import Card from '../components/Card';
 import Loader from 'react-loader-spinner';
 import ResultsData from '../components/ResultsData';
-import Pagination from 'react-router-pagination-bulma';
 
 
 
@@ -89,11 +88,7 @@ export default class ProductResults extends React.Component {
                 <div className="columns is-multiline">
                     {this.renderCards(searchResults)}
                 </div>
-                <Pagination
-                  totalPages={12}
-                  pageNumber={1}
-                  spread={5}
-                />
+
             </div>
         );
     }
