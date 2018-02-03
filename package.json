@@ -1,7 +1,7 @@
 {
-  "name": "lcbo-react",
-  "version": "0.1.0",
-  "homepage": "https://benjie.ca/lcbo-app-react",
+  "name": "Boozehound",
+  "version": "1.0.0",
+  "homepage": "https://boozehound-lcbo.herokuapp.com/",
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.6",
