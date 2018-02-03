@@ -5,7 +5,7 @@ import Card from '../components/Card';
 import Loader from 'react-loader-spinner';
 import ResultsData from '../components/ResultsData';
 import Pagination from '../components/pagination';
-
+import ApiError from '../components/ApiError';
 
 import './ProductResults.scss';
 
@@ -25,6 +25,7 @@ export default class ProductResults extends React.Component {
         this.axiosCall = this.axiosCall.bind(this);
         this.state = {
             resultsReceived: false,
+            error: false,
             searchResults: {},
         };
     }
@@ -40,8 +41,12 @@ export default class ProductResults extends React.Component {
                     searchResults: returnedSearchResult,
                 });
             })
-            .catch(function(error) {
-                console.log(error);
+            .catch((error) =>{
+                this.setState({
+                    resultsReceived: true,
+                    error: true,
+                    searchResults: error,
+                });
             });
     }
 
@@ -57,7 +62,9 @@ export default class ProductResults extends React.Component {
     renderCards(searchResults) {
         const productNotFound = searchResults.suggestion;
         if (productNotFound) {
-            return `Did you mean ${searchResults.suggestion}`;
+            return (
+            <p>Did you mean <Link to={`/products/${searchResults.suggestion}`}>{searchResults.suggestion}</Link></p>
+        );
         }
         else {
             return (searchResults.result.map((product) => {
@@ -88,7 +95,10 @@ export default class ProductResults extends React.Component {
     }
 
     renderResultsView(searchResults) {
-        const pager = this.state.searchResults.pager;
+        if(this.state.error) {
+           return  <ApiError  message={searchResults.message}/>
+        } else {
+        const pager = searchResults.pager;
         return (
             <div className="section">
                 <ResultsData
@@ -107,7 +117,7 @@ export default class ProductResults extends React.Component {
                     resultType="products"
                 />
             </div>
-        );
+        );}
     }
 
     handleProductCardClick(productID) {

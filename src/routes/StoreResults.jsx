@@ -4,6 +4,7 @@ import Card from '../components/Card';
 import Loader from 'react-loader-spinner';
 import ResultsData from '../components/ResultsData';
 import Pagination from '../components/pagination';
+import ApiError from '../components/ApiError';
 
 import './StoreResults.scss';
 
@@ -39,8 +40,12 @@ export default class StoreResults extends React.Component {
                     storeResults: returnedSearchResult,
                 });
             })
-            .catch(function(error) {
-                console.log(error);
+            .catch((error) =>{
+                this.setState({
+                    resultsReceived: true,
+                    error: true,
+                    searchResults: error,
+                });
             });
     }
 
@@ -86,6 +91,9 @@ export default class StoreResults extends React.Component {
     }
 
     renderResultsView(storeResults) {
+        if(this.state.error) {
+            return  <ApiError  message={storeResults.message}/>
+         } else {
         const pager = this.state.storeResults.pager;
         return (
             <div className="section">
@@ -106,7 +114,7 @@ export default class StoreResults extends React.Component {
                     resultType="stores"
                 />
             </div>
-        );
+        );}
     }
 
     render() {

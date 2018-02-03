@@ -105,6 +105,11 @@ class App extends Component {
             </Switch>
           </div>
         </BrowserRouter>
+        <div className="attribution">
+         <p> App developed by <a href="www.benjie.ca">Benjie Kibblewhite</a></p>
+          <p><a href="https://github.com/ostaron/lcbo-app-react">View the Github Repo.</a></p>
+          <p>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
+        </div>
       </div>
     );
   }

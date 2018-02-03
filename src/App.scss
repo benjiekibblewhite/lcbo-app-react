@@ -19,6 +19,10 @@ strong {
     color: inherit;
 }
 
+a {
+    color: tomato;
+}
+
 .centered-block {
     display: block;
     margin: 0 auto;
@@ -28,5 +32,11 @@ strong {
     max-width: 752px;
     margin: 36px auto;
     padding: 0 24px;
+    text-align: center;
+}
+.attribution {
+    font-size: 10px;
+    margin: 0 auto;
+    max-width: 600px;
     text-align: center;
 }

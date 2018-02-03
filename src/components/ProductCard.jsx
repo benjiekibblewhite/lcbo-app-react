@@ -1,5 +1,5 @@
 import React from 'react';
-
+import noPreviewAvailable from '../img/glass-and-bottle-of-wine.png'
 export default class ProductCard extends React.Component {
 
   render() {
@@ -7,7 +7,10 @@ export default class ProductCard extends React.Component {
       <React.Fragment>
         <div className="media-left">
           <figure className="image">
-            <img style={{height: '128px',  width: 'auto'}} src={this.props.image} alt="Product Preview"/>
+          { this.props.image
+            ? <img style={{height: '128px',  width: 'auto'}} src={this.props.image} alt="Product Preview"/>
+            : <img style={{height: '128px',  width: 'auto'}} src={noPreviewAvailable} alt="No Preview Available"/>
+          }
           </figure>
         </div>
         <div className="media-content">
