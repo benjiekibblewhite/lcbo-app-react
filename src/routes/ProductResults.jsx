@@ -50,7 +50,6 @@ export default class ProductResults extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('yes')
         this.axiosCall(nextProps);
         this.forceUpdate()
     }
@@ -66,7 +65,7 @@ export default class ProductResults extends React.Component {
                     <div
                     key={product.id}
                     data-product-id={product.id}
-                    
+
                     className="column is-half">
                     <Link to={`/stores/${product.id}`}>
                     <Card
@@ -92,8 +91,8 @@ export default class ProductResults extends React.Component {
         const pager = this.state.searchResults.pager;
         return (
             <div className="section">
-                <ResultsData 
-                    left_text={`${searchResults.pager.total_record_count} results returned.`} 
+                <ResultsData
+                    left_text={`${searchResults.pager.total_record_count} results returned.`}
                     right_text="Click on product to see stores with item in stock"
                     />
                 <div className="columns is-multiline">
@@ -120,7 +119,7 @@ export default class ProductResults extends React.Component {
             this.state.resultsReceived ?
             this.renderResultsView(this.state.searchResults) :
             <div className="centered-block">
-                        <p>Loading...</p> 
+                        <p>Loading...</p>
                         <Loader type="Oval" color="#4a4a4a" height={50} width={50} />
                     </div>
         );

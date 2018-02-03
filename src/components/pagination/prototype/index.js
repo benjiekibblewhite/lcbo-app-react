@@ -32,11 +32,11 @@ export function calculatePageNumber(pageNumber, totalPages) {
 export default class Pagination extends Component {
   static calculateTotalPages = calculateTotalPages
   static calculatePageNumber = calculatePageNumber
-  
+
   state = {
     pageNumber: toInteger(this.props.pageNumber),
     totalPages: toInteger(this.props.totalPages)
-    
+
   }
 
   x() {
@@ -58,12 +58,11 @@ export default class Pagination extends Component {
   lastIndex() {
     return 0
   }
-  
+
   pageKey(currentPageKey) {return `pagination-${currentPageKey}`}
+
   pageLinkPath(path, currentPageNumber) {
-    console.log(this.props.currentUrl);
-    return `${path}/${this.props.resultType}/${this.props.query_or_id}/${currentPageNumber}` 
-    
+    return `${path}/${this.props.resultType}/${this.props.query_or_id}/${currentPageNumber}`
   }
 
   hasReversePageLink(pageNumber, totalPages) {
@@ -83,33 +82,27 @@ export default class Pagination extends Component {
   }
 
   reversePageLinkItem(path, pageNumber, totalPages) {
-    if (this.hasReversePageLink(pageNumber, totalPages)) {
-      const n = this.zeroIndex(pageNumber, totalPages)
+      const n = pageNumber - 1
       return (
-          <Link key={this.pageKey('reverse')} className='pagination-previous' to={this.pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
+          <Link disabled= {n < 1 ? true : false }key={this.pageKey('reverse')} className='pagination-previous' to={this.pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
             <span className='reverse'>
               Previous
             </span>
           </Link>
       )
     }
-    return null
-  }
+
 
   forwardPageLinkItem(path, pageNumber, totalPages) {
-    if (this.hasForwardPageLink(pageNumber, totalPages)) {
-      const n = this.lastIndex(pageNumber, totalPages) + 1
-      console.log(n)
+      const n = pageNumber + 1
       return (
-          <Link key={this.pageKey('forward')} className='pagination-next' to={this.pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
+          <Link disabled= {n > totalPages ? true : false } key={this.pageKey('forward')} className='pagination-next' to={this.pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
             <span className='forwardPage'>
               Next
             </span>
           </Link>
       )
     }
-    return null
-  }
 
   zeroPageLinkItem(path, pageNumber, totalPages) {
     if (this.hasZeroPageLink(pageNumber, totalPages)) {
@@ -202,6 +195,8 @@ export default class Pagination extends Component {
       else {
         return (
           <nav className="pagination" role="pagination" aria-label="Pagination Navigation">
+              {this.reversePageLinkItem(path, page, totalPages)}
+              {this.forwardPageLinkItem(path, page, totalPages)}
             <ul className='pagination-list'>
               {this.pageLinkItems(path, page, totalPages)}
             </ul>

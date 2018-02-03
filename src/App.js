@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
 import Header from './Header/Header';
 
@@ -38,11 +38,16 @@ class App extends Component {
     this.setState({searchQuery: searchQuery})
   }
 
+
   render() {
+    /* PropsRoute allows us to send props to the component rendered by a Route
+      NeedAddressRoute redirects a user who has not set their address to the landing page, where they can enter it
+    */
     const renderMergedProps = (component, ...rest) => {
       const finalProps = Object.assign({}, ...rest);
       return (React.createElement(component, finalProps));
     }
+
     const PropsRoute = ({
       component,
       ...rest
@@ -53,6 +58,17 @@ class App extends Component {
         return renderMergedProps(component, routeProps, rest);
       }}/>);
     }
+
+    const NeedAddressRoute = ({ component: Component, ...rest }) => (
+    (this.state.userAddress.length > 0 ? (
+          <PropsRoute component={Component} {...rest}/>
+        ) : (
+          <Redirect to={{
+            pathname: '/'
+          }}/>
+        )
+      )
+    )
 
     return (
       <div>
@@ -68,21 +84,21 @@ class App extends Component {
                 component={LandingPage}
                 handleAddressFormSubmit={this.handleAddressFormSubmit}/>
               ]
-              <PropsRoute
+              <NeedAddressRoute
                 path="/update-address"
                 component={Address}
                 handleAddressFormSubmit={this.handleAddressFormSubmit}/>
-              <PropsRoute
+              <NeedAddressRoute
                 path="/search"
                 component={Search}
                 handleSearchFormSubmit={this.handleSearchFormSubmit}
                 />
-              <PropsRoute
+              <NeedAddressRoute
                 path="/products/:query/:page_num?"
                 component={ProductResults}
                 userAddress={this.state.userAddress}
                 />
-              <PropsRoute
+              <NeedAddressRoute
                 path="/stores/:product_id/:page_num?"
                 component={StoreResults}
                 userAddress={this.state.userAddress}/>

@@ -14,6 +14,8 @@ import {
   calculatePageNumber
 } from './prototype'
 
+import './pagination.scss';
+
 export {
   Standard,
   Centered

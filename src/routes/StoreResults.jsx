@@ -3,6 +3,7 @@ import Axios from 'axios';
 import Card from '../components/Card';
 import Loader from 'react-loader-spinner';
 import ResultsData from '../components/ResultsData';
+import Pagination from '../components/pagination';
 
 import './StoreResults.scss';
 
@@ -19,16 +20,18 @@ export default class StoreResults extends React.Component {
         this.renderResultsView = this
             .renderResultsView
             .bind(this);
+        this.axiosCall = this.axiosCall.bind(this);
+
         this.state = {
             resultsReceived: false,
             storeResults: {},
         }
     }
 
-    componentDidMount() {
-        const { page_num, product_id } = this.props.match.params;
+    axiosCall(props) {
+        const { page_num, product_id } = props.match.params;
         Axios
-            .get(`https://lcboapi.com/stores?access_key=${process.env.REACT_APP_API_KEY}&per_page=10&geo=${this.props.userAddress}&product_id=${product_id}&page=${page_num ? page_num : '1'}`)
+            .get(`https://lcboapi.com/stores?access_key=${process.env.REACT_APP_API_KEY}&per_page=10&geo=${props.userAddress}&product_id=${product_id}&page=${page_num ? page_num : '1'}`)
             .then((response) => {
                 const returnedSearchResult = response.data;
                 this.setState({
@@ -39,7 +42,15 @@ export default class StoreResults extends React.Component {
             .catch(function(error) {
                 console.log(error);
             });
+    }
 
+    componentDidMount() {
+       this.axiosCall(this.props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.axiosCall(nextProps);
+        this.forceUpdate()
     }
 
     handleStoreCardClick(storeAddress, storeCity) {
@@ -60,12 +71,12 @@ export default class StoreResults extends React.Component {
                         onClick={() => {this.handleStoreCardClick(store.address_line_1, store.city)}}
                     >
                     <Card
-                        productUserSearchedFor={storeResults.product.name} 
-                        name={store.name} 
-                        numberInStock={store.quantity} 
-                        addressLineOne={store.address_line_1} 
-                        addressLineTwo={store.address_line_2} 
-                        city={store.city} 
+                        productUserSearchedFor={storeResults.product.name}
+                        name={store.name}
+                        numberInStock={store.quantity}
+                        addressLineOne={store.address_line_1}
+                        addressLineTwo={store.address_line_2}
+                        city={store.city}
                         telephone={store.telephone}
                         />
                 </div>
@@ -75,16 +86,25 @@ export default class StoreResults extends React.Component {
     }
 
     renderResultsView(storeResults) {
+        const pager = this.state.storeResults.pager;
         return (
             <div className="section">
-                <ResultsData 
+                <ResultsData
                     stores
-                    left_text={`${storeResults.pager.total_record_count} results returned.`} 
+                    left_text={`${storeResults.pager.total_record_count} results returned.`}
                     right_text="Click on store to see directions in Google Maps."
                     />
                 <div className="columns is-multiline">
                     {this.renderCards(storeResults)}
                 </div>
+                <Pagination
+                    format="center"
+                    totalPages={pager.total_pages}
+                    pageNumber={pager.current_page}
+                    spread={5}
+                    query_or_id={this.props.match.params.product_id}
+                    resultType="stores"
+                />
             </div>
         );
     }
@@ -93,10 +113,10 @@ export default class StoreResults extends React.Component {
         return ( this.state.resultsReceived ?
                     this.renderResultsView(this.state.storeResults)
                 : <div className="centered-block">
-                        <p>Loading...</p> 
+                        <p>Loading...</p>
                         <Loader type="Oval" color="#4a4a4a" height={50} width={50} />
                     </div>
-                
+
 
         );
     }
