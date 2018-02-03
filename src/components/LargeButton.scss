@@ -1,0 +1,21 @@
+.largebutton {
+    font-size: 24px;
+    background-color: black;
+    color: white;
+    border: none;
+    font-family: Raleway;
+    font-weight: 400;
+    border-radius: 16px;
+    letter-spacing: 1px;
+    padding: 8px 32px;
+    transition: box-shadow 0.1s ease;
+    cursor: pointer;
+    &:hover,
+    &:focus {
+        box-shadow: #444 0 0 4px 0;
+        color: tomato;
+    }
+    &:active {
+        transform: scale(0.98);
+    }
+}

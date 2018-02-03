@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900|Roboto" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/7.0.0/normalize.css">
+</head>
+
+<body>
+    <style>
+    
+        body {
+            font-family: Roboto;
+        }
+        .header {
+            background-color: black;
+            color: white;
+            min-height: 196px;
+        }
+
+        .hero-body {
+            padding: 2rem 1.5rem;
+        }
+
+        .logo .title {
+            color: white;
+            font-family: Raleway, sans-serif;
+            font-size: 24px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        strong {
+            color: inherit;
+        }
+
+        .header_links {
+            color: tomato;
+            font-weight: bold;
+        }
+
+        .header_links:hover {
+            text-decoration: underline;
+            color: inherit;
+        }
+
+
+        .wrapper_landing-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            max-width: 752px;
+            margin: 0 auto;
+            padding: 0 24px;
+            text-align: center;
+        }
+
+        .landing-page_header {
+            font-family: Raleway;
+            font-weight: 500;
+            font-size: 64px;
+            letter-spacing: 1px;
+            color: black;
+        }
+
+        .landing-page_description {
+            font-family: Roboto;
+            margin-bottom: 24px;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .button {
+            margin: 24px 0 56px;
+            font-size: 24px;
+            background-color: black;
+            color: white;
+            border: none;
+            font-family: Raleway;
+            font-weight: 400;
+            border-radius: 16px;
+            letter-spacing: 1px;
+            padding: 8px 32px;
+            transition: box-shadow 0.1s ease;
+            cursor: pointer;
+        }
+
+        .button:hover,
+        .button:focus {
+            box-shadow: #444 0 0 4px 0;
+            color: tomato;
+        }
+
+        .button:active {
+            transform: scale(0.98);
+        }
+
+        .input {
+            font-size: 32px;
+            max-width: 80%;
+            font-family: Roboto;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            border-radius: 15px;
+            border: 2px #ccc solid;
+            transition: box-shadow 0.1s ease, border-color 0.1s ease;
+            text-align: center;
+        }
+
+        .input:hover {
+            box-shadow: #ccc 0 0 4px 0;
+        }
+
+        .input:focus {
+            box-shadow: lightcoral 0 0 8px 0;
+            border-color: lightcoral;
+        }
+
+        .select select {
+            border-color: #ccc;
+        }
+
+        .select:not(.is-multiple)::after {
+            border-color: black;
+        }
+
+        .select:hover:after {
+            border-color: tomato;
+        }
+
+        .productSearch_label {
+            font-size: 36px;
+            font-weight: 500;
+            margin: 48px 0;
+            color: black;
+            font-family: Raleway;
+        }
+
+        .results .card {
+            height: 100%;
+            padding: 24px;
+            cursor: pointer;
+            transition: box-shadow 0.1s ease;
+            border-radius: 4px;
+        }
+
+        .results .card:hover {
+            box-shadow: lightcoral 0 0 8px 0;
+            border-color: lightcoral;
+        }
+
+        .results .card:active {
+            transform: scale(0.995);
+        }
+
+        .results.section {
+            width: 95%;
+            margin: 0 auto;
+        }
+    </style>
+    <header class="hero header">
+        <div class="hero-body">
+            <div class="logo">
+                <h1 class="title">Boozehound</h1>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <p>You are searching for <strong>Millstreet Organic.</strong></p>
+                    <p><a class="header_links" href="#">Would you like to search for something else?</a></p>
+                </div>
+                <div class="column has-text-right">
+                    <p>Your address is set to <strong>241 spadina ave, Toronto.</strong></p>
+                    <p><a class="header_links" href="#">Would you like to change it?</a></p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="wrapper wrapper_landing-page" style="display: none">
+        <h1 class="landing-page_header">Boozehound</h1>
+        <p class="landing-page_description">Boozehound helps you find LCBO stores close to you that have your favourite products in stock. No more trudging through the snow to find that your local doesn't have what you were looking for!</p>
+        <input name="address" type="text" class="input" placeholder="Enter street address" />
+        <div class="select">
+            <select id="userCity">
+                <option value="Toronto">Toronto</option>
+                <option value="Barrie">Barrie</option>
+                <option value="Belleville">Belleville</option>
+                <option value="Brampton">Brampton</option>
+                <option value="Brantford">Brantford</option>
+                <option value="Brockville">Brockville</option>
+                <option value="Burlington">Burlington</option>
+                <option value="Cambridge">Cambridge</option>
+                <option value="Chatham-Kent">Chatham-Kent</option>
+                <option value="Clarence-Rockland">Clarence-Rockland</option>
+                <option value="Cornwall">Cornwall</option>
+                <option value="County of Brant">County of Brant</option>
+                <option value="Dryden">Dryden</option>
+                <option value="Elliot Lake">Elliot Lake</option>
+                <option value="Greater Sudbury">Greater Sudbury</option>
+                <option value="Guelph">Guelph</option>
+                <option value="Haldiman County">Haldiman County</option>
+                <option value="Hamilton">Hamilton</option>
+                <option value="Kawartha Lakes">Kawartha Lakes</option>
+                <option value="Kenora">Kenora</option>
+                <option value="Kingston">Kingston</option>
+                <option value="Kitchener">Kitchener</option>
+                <option value="London">London</option>
+                <option value="Markham">Markham</option>
+                <option value="Mississauga">Mississauga</option>
+                <option value="Niagara Falls">Niagara Falls</option>
+                <option value="Norfolk County">Norfolk County</option>
+                <option value="North Bay">North Bay</option>
+                <option value="Orillia">Orillia</option>
+                <option value="Oshawa">Oshawa</option>
+                <option value="Ottawa">Ottawa</option>
+                <option value="Owen Sound">Owen Sound</option>
+                <option value="Pembroke">Pembroke</option>
+                <option value="Peterborough">Peterborough</option>
+                <option value="Pickering">Pickering</option>
+                <option value="Port Colborne">Port Colborne</option>
+                <option value="Quinte West">Quinte West</option>
+                <option value="Sarnia">Sarnia</option>
+                <option value="Sault Ste. Marie">Sault Ste. Marie</option>
+                <option value="St Chatarines">St Chatarines</option>
+                <option value="St. Thomas">St. Thomas</option>
+                <option value="Stratford">Stratford</option>
+                <option value="Temiskaming Shores">Temiskaming Shores</option>
+                <option value="Thorold">Thorold</option>
+                <option value="Thunder Bay">Thunder Bay</option>
+                <option value="Timmins">Timmins</option>
+                <option value="Vaughn">Vaughn</option>
+                <option value="Waterloo">Waterloo</option>
+                <option value="Windor">Windor</option>
+                <option value="Woodstock">Woodstock</option>
+            </select>
+        </div>
+        <button class="button">
+            Submit
+        </button>
+    </main>
+    <main class="wrapper wrapper_landing-page" style="display: none">
+        <label for="productSearch" class="label productSearch_label">What are you looking for?</label>
+        <input name="productSearch" id="productSearch" type="text" class="input productSearch" placeholder="Search">
+        <button class="button">
+            Submit
+        </button>
+    </main>
+    <main class="wrapper wrapper_results-view">
+        <section class="section level" style="width: 100%;">
+            <div class="level-item level-left">
+                <div>
+                    <p>Showing Results for &nbsp;<strong>lager</strong></p>
+                    <p><strong>506</strong>&nbsp;results returned</p>
+                </div>
+            </div>
+        </section>
+        <section class="results section columns is-desktop is-multiline">
+            <div data-product-id="300681" class="column is-half-desktop" style="">
+                <div class="media card">
+                    <div class="media-left">
+                        <figure class="image"><img style="height: 128px; width: auto;" src="https://dx5vpyka4lqst.cloudfront.net/products/300681/images/thumb.png" alt="Product Preview"></figure>
+                    </div>
+                    <div class="media-content">
+                        <h3 class="title is-5">Coors Light</h3>
+                        <p>Beer</p>
+                        <p>Lager, Light Lager</p>
+                        <p>Light &amp; Malty</p>
+                        <p>Molson's Brewery of Canada Limited</p>
+                        <p>6x473 mL can, 4% ABV</p>
+                    </div>
+                    <div class="media-right">
+                        <p>$14.50</p>
+                    </div>
+                </div>
+            </div>
+            <div data-product-id="300681" class="column is-half-desktop" style="">
+                <div class="media card">
+                    <div class="media-left">
+                        <figure class="image"><img style="height: 128px; width: auto;" src="https://dx5vpyka4lqst.cloudfront.net/products/300681/images/thumb.png" alt="Product Preview"></figure>
+                    </div>
+                    <div class="media-content">
+                        <h3 class="title is-5">Coors Light</h3>
+                        <p>Beer</p>
+                        <p>Lager, Light Lager</p>
+                        <p>Light &amp; Malty</p>
+                        <p>Molson's Brewery of Canada Limited</p>
+                        <p>6x473 mL can, 4% ABV</p>
+                    </div>
+                    <div class="media-right">
+                        <p>$14.50</p>
+                    </div>
+                </div>
+            </div>
+            <div data-product-id="300681" class="column is-half-desktop" style="">
+                <div class="media card">
+                    <div class="media-left">
+                        <figure class="image"><img style="height: 128px; width: auto;" src="https://dx5vpyka4lqst.cloudfront.net/products/300681/images/thumb.png" alt="Product Preview"></figure>
+                    </div>
+                    <div class="media-content">
+                        <h3 class="title is-5">Coors Light</h3>
+                        <p>Beer</p>
+                        <p>Lager, Light Lager</p>
+                        <p>Light &amp; Malty</p>
+                        <p>Molson's Brewery of Canada Limited</p>
+                        <p>6x473 mL can, 4% ABV</p>
+                    </div>
+                    <div class="media-right">
+                        <p>$14.50</p>
+                    </div>
+                </div>
+            </div>
+            <div data-product-id="300681" class="column is-half-desktop" style="">
+                <div class="media card">
+                    <div class="media-left">
+                        <figure class="image"><img style="height: 128px; width: auto;" src="https://dx5vpyka4lqst.cloudfront.net/products/300681/images/thumb.png" alt="Product Preview"></figure>
+                    </div>
+                    <div class="media-content">
+                        <h3 class="title is-5">Coors Light</h3>
+                        <p>Beer</p>
+                        <p>Lager, Light Lager</p>
+                        <p>Light &amp; Malty</p>
+                        <p>Molson's Brewery of Canada Limited</p>
+                        <p>6x473 mL can, 4% ABV</p>
+                    </div>
+                    <div class="media-right">
+                        <p>$14.50</p>
+                    </div>
+                </div>
+            </div>
+            <div data-product-id="300681" class="column is-half-desktop" style="">
+                <div class="media card">
+                    <div class="media-left">
+                        <figure class="image"><img style="height: 128px; width: auto;" src="https://dx5vpyka4lqst.cloudfront.net/products/300681/images/thumb.png" alt="Product Preview"></figure>
+                    </div>
+                    <div class="media-content">
+                        <h3 class="title is-5">Coors Light</h3>
+                        <p>Beer</p>
+                        <p>Lager, Light Lager</p>
+                        <p>Light &amp; Malty</p>
+                        <p>Molson's Brewery of Canada Limited</p>
+                        <p>6x473 mL can, 4% ABV</p>
+                    </div>
+                    <div class="media-right">
+                        <p>$14.50</p>
+                    </div>
+                </div>
+            </div>
+            <div data-product-id="300681" class="column is-half-desktop" style="">
+                <div class="media card">
+                    <div class="media-left">
+                        <figure class="image"><img style="height: 128px; width: auto;" src="https://dx5vpyka4lqst.cloudfront.net/products/300681/images/thumb.png" alt="Product Preview"></figure>
+                    </div>
+                    <div class="media-content">
+                        <h3 class="title is-5">Coors Light</h3>
+                        <p>Beer</p>
+                        <p>Lager, Light Lager</p>
+                        <p>Light &amp; Malty</p>
+                        <p>Molson's Brewery of Canada Limited</p>
+                        <p>6x473 mL can, 4% ABV</p>
+                    </div>
+                    <div class="media-right">
+                        <p>$14.50</p>
+                    </div>
+                </div>
+            </div>
+            <nav style="width: 100%;" class="pagination is-centered" role="navigation" aria-label="pagination"><a class="pagination-previous" disabled="">Previous</a><a class="pagination-next">Next page</a>
+                <ul class="pagination-list">
+                    <li><a class="pagination-link is-current" aria-label="GoTo page 1">1</a></li>
+                    <li><a class="pagination-link" aria-label="GoTo page 2">2</a></li>
+                    <li><a class="pagination-link" aria-label="GoTo page 3">3</a></li>
+                    <li><span class="pagination-ellipsis">...</span></li>
+                    <li><a class="pagination-link" aria-label="GoTo page 9">9</a></li>
+                </ul>
+            </nav>
+        </section>
+    </main>
+
+</body>
+
+</html>

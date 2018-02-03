@@ -1,0 +1,50 @@
+@import '../styles/scss/theme.scss';
+
+.header {
+    background-color: black;
+    color: white;
+    .hero-body {
+        padding: 2rem 1.5rem;
+    }
+    .logo{
+        // height: 60px;
+    }
+    .logo_img {
+        height: 60px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .logo_text {
+        font-family: $family-heading;
+        color: white;
+        font-size: 40px;
+        letter-spacing: 1px;
+        font-weight: 600;
+        display: inline-block;
+        vertical-align: middle;
+
+        &:hover{
+            color: tomato;
+            fill: tomato;
+        }
+        a {
+            color: inherit;
+        }
+
+    }
+
+    .header_links {
+        color: tomato;
+        font-weight: bold;
+    }
+
+    .header_links:hover {
+        text-decoration: underline;
+        color: inherit;
+    }
+
+    .info-container {
+        min-height: 72px;
+        font-size: 0.9rem;
+    }
+}

@@ -1,0 +1,17 @@
+.pagination {
+    .pagination-previous {
+        order: 1;
+    }
+    .pagination-list {
+        flex-grow: 0;
+    }
+    .pagination-link.is-current {
+        background-color: tomato;
+        border-color: tomato;
+    }
+    .pagination-link:focus,
+    .pagination-next:focus,
+    .pagination-previous:focus {
+        border-color: tomato;
+    }
+}

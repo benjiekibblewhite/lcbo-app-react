@@ -1,0 +1,15 @@
+@import "../../node_modules/bulma/sass/utilities/initial-variables";
+@import "../../node_modules/bulma/sass/utilities/functions";
+@import "../../node_modules/bulma/sass/utilities/derived-variables";
+@import "./config";
+
+// Add new color variables to the color map.
+$addColors: (
+  "secondary": ($blue, $blue-invert),
+  "primary": ($pink, $pink-invert),
+);
+$colors: map-merge($colors, $addColors);
+
+
+
+@import "../../node_modules/bulma/bulma";

@@ -1,177 +1,117 @@
 import React, {Component} from 'react';
-import FlipMove from 'react-flip-move';
-import Axios from 'axios';
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
-import 'font-awesome/css/font-awesome.css'
-import 'bulma/css/bulma.css';
-import './App.css';
+import Header from './Header/Header';
 
-import Header from './components/Header';
-import UserLocationForm from './components/UserLocationForm';
-import UserSearchQueryForm from './components/UserSearchQueryForm';
-import Results from './components/Results';
-import Pagination from './components/Pagination';
+import LandingPage from './routes/LandingPage';
+import Search from './routes/Search';
+import ProductResults from './routes/ProductResults';
+import StoreResults from './routes/StoreResults';
+import Address from './routes/Address';
 
+import './App.scss';
 
 class App extends Component {
 
   constructor(props) {
     super(props);
 
-    this.updateuserLocation = this
-      .updateuserLocation
+    this.handleAddressFormSubmit = this
+      .handleAddressFormSubmit
       .bind(this);
-    this.showLocationForm = this
-      .showLocationForm
-      .bind(this);
-    this.getSearchResults = this
-      .getSearchResults
-      .bind(this);
-    this.showSearchResults = this
-      .showSearchResults
-      .bind(this);
-    this.getStoresWithProduct = this
-      .getStoresWithProduct
-      .bind(this);
-    this.showStoreResults = this
-      .showStoreResults
-      .bind(this);
+
     this.handleSearchFormSubmit = this
       .handleSearchFormSubmit
       .bind(this);
-    this.handleProductCardClick = this
-      .handleProductCardClick
-      .bind(this);
-    this.handleStoreCardClick = this
-      .handleStoreCardClick
-      .bind(this);
-    this.handlePageClick = this
-      .handlePageClick
-      .bind(this);
+
     this.state = {
-      showLocationForm: true,
-      showQueryForm: false,
-      productResultsVisible: false,
-      storeResultsVisible: false,
-      userLocation: "",
-      userSearchQuery: "",
-      searchResults: {},
-      storeResults: {}
+      searchQuery: '',
+      userAddress: ''
     };
   }
 
-  updateuserLocation(userAddress, userCity) {
-    const userLocation = `${userAddress}, ${userCity}`;
-    this.setState({userLocation: userLocation, showLocationForm: false, showQueryForm: true});
-  }
-
-  showLocationForm(e) {
-    e.preventDefault();
-    this.setState({showLocationForm: true, showQueryForm: false});
-  }
-  // change this and getStoreResults. Have functions that instead generate URLs,
-  // and have a single function that makes the Axios call
-
-  getSearchResults(searchQuery, pageNumber) {
-    Axios
-      .get(`https://lcboapi.com/products?access_key=${process.env.REACT_APP_API_KEY}&per_page=10&q="${searchQuery}&xmlToJSON=false"&page=${pageNumber}`)
-      .then((response) => {
-        const returnedSearchResult = response.data;
-        this.setState({searchResults: returnedSearchResult});
-        this.showSearchResults();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-  showSearchResults() {
-    this.setState({productResultsVisible: true, storeResultsVisible: false});
+  handleAddressFormSubmit(streetAddress, city) {
+    this.setState({userAddress: `${streetAddress}, ${city}`})
   }
 
   handleSearchFormSubmit(searchQuery) {
-    this.setState({userSearchQuery: searchQuery});
-    this.getSearchResults(searchQuery, 1);
+    this.setState({searchQuery: searchQuery})
   }
 
-  handleProductCardClick(productId) {
-    this.getStoresWithProduct(productId, 1);
-  }
-
-  getStoresWithProduct(productID, pageNumber) {
-    Axios
-      .get(`https://lcboapi.com/stores?access_key=${process.env.REACT_APP_API_KEY}&per_page=10&geo=${this.state.userLocation}&product_id=${productID}&page=${pageNumber}`)
-      .then((response) => {
-        const returnedStoreResult = response.data;
-        this.setState({storeResults: returnedStoreResult});
-        this.showStoreResults();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-  showStoreResults() {
-    this.setState({productResultsVisible: false, storeResultsVisible: true});
-  }
-
-  handleStoreCardClick(storeAddress, storeCity) {
-    const mapURL = `https://www.google.ca/maps/dir/${this.state.userLocation},+ON/${storeAddress},${storeCity},+ON`;
-    window.open(mapURL);
-  }
-
-  handlePageClick(pageNumber, type) {
-    if (type === "prod") {
-      this.getSearchResults(this.state.userSearchQuery, pageNumber);
-    } else if (type === "store") {
-      this.getStoresWithProduct(this.state.storeResults.product.id, pageNumber);
-    }
-  }
 
   render() {
-    /* Should make location + search forms animate on appear too */
+    /* PropsRoute allows us to send props to the component rendered by a Route
+      NeedAddressRoute redirects a user who has not set their address to the landing page, where they can enter it
+    */
+    const renderMergedProps = (component, ...rest) => {
+      const finalProps = Object.assign({}, ...rest);
+      return (React.createElement(component, finalProps));
+    }
+
+    const PropsRoute = ({
+      component,
+      ...rest
+    }) => {
+      return (<Route
+        {...rest}
+        render={routeProps => {
+        return renderMergedProps(component, routeProps, rest);
+      }}/>);
+    }
+
+    const NeedAddressRoute = ({ component: Component, ...rest }) => (
+    (this.state.userAddress.length > 0 ? (
+          <PropsRoute component={Component} {...rest}/>
+        ) : (
+          <Redirect to={{
+            pathname: '/'
+          }}/>
+        )
+      )
+    )
+
     return (
-      <div className="App">
-        <Header
-          userLocation={this.state.userLocation}
-          userSearchQuery={this.state.userSearchQuery}
-          showLocationForm={this.showLocationForm}/>
-        <FlipMove enterAnimation="accordionVertical" leaveAnimation="accordionVertical">
-          {this.state.showLocationForm
-            ? <UserLocationForm updateuserLocation={this.updateuserLocation}/>
-            : null}
-          {this.state.showQueryForm
-            ? <UserSearchQueryForm searchFormSubmit={this.handleSearchFormSubmit}/>
-            : null}
-        </FlipMove>
-        {this.state.productResultsVisible || this.state.storeResultsVisible
-          ? <Results
-              searchQuery={this.state.userSearchQuery}
-              searchResults={this.state.searchResults}
-              storeResults={this.state.storeResults}
-              handleProductCardClick={this.handleProductCardClick}
-              handleStoreCardClick={this.handleStoreCardClick}
-              productResultsVisible={this.state.productResultsVisible}
-              storeResultsVisible={this.state.storeResultsVisible}
-              showSearchResults={this.showSearchResults}
-              showStoreResults={this.showStoreResults}/>
-          : null}
-        {this.state.productResultsVisible
-          ? <Pagination
-              results={this.state.searchResults.pager}
-              handlePageClick={this.handlePageClick}
-              type="prod"
-              />
-          : null}
-        {this.state.storeResultsVisible
-          ? <Pagination
-              results={this.state.storeResults.pager}
-              handlePageClick={this.handlePageClick}
-              type="store"/>
-          : null}
+      <div>
+        <BrowserRouter>
+          <div className="container">
+            <Header
+              searchQuery={this.state.searchQuery}
+              userAddress={this.state.userAddress}/>
+            <Switch>
+              <PropsRoute
+                exact
+                path="/"
+                component={LandingPage}
+                handleAddressFormSubmit={this.handleAddressFormSubmit}/>
+              ]
+              <NeedAddressRoute
+                path="/update-address"
+                component={Address}
+                handleAddressFormSubmit={this.handleAddressFormSubmit}/>
+              <NeedAddressRoute
+                path="/search"
+                component={Search}
+                handleSearchFormSubmit={this.handleSearchFormSubmit}
+                />
+              <NeedAddressRoute
+                path="/products/:query/:page_num?"
+                component={ProductResults}
+                userAddress={this.state.userAddress}
+                />
+              <NeedAddressRoute
+                path="/stores/:product_id/:page_num?"
+                component={StoreResults}
+                userAddress={this.state.userAddress}/>
+            </Switch>
+          </div>
+        </BrowserRouter>
+        <div className="attribution">
+         <p> App developed by <a href="www.benjie.ca">Benjie Kibblewhite</a></p>
+          <p><a href="https://github.com/ostaron/lcbo-app-react">View the Github Repo.</a></p>
+          <p>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
+        </div>
       </div>
     );
   }
 }
-
 export default App;

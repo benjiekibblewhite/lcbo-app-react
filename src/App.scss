@@ -1,0 +1,42 @@
+$pagination-active-color: tomato;
+$pagination-active-border-color : tomato;
+@import url('https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css');
+@import './styles/scss/theme.scss';
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: $family-base;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: $family-heading;
+}
+
+strong {
+    color: inherit;
+}
+
+a {
+    color: tomato;
+}
+
+.centered-block {
+    display: block;
+    margin: 0 auto;
+}
+
+.form_wrapper {
+    max-width: 752px;
+    margin: 36px auto;
+    padding: 0 24px;
+    text-align: center;
+}
+.attribution {
+    font-size: 10px;
+    margin: 0 auto;
+    max-width: 600px;
+    text-align: center;
+}

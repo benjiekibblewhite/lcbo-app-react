@@ -1,0 +1,31 @@
+.card {
+    height: 100%;
+    padding: 24px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+    border-radius: 4px;
+    &:hover {
+        box-shadow: lightcoral 0 0 8px 0;
+        border-color: lightcoral;
+    }
+    &:active {
+        transform: scale(0.995);
+    }
+    .card_details {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 465px) {
+    .media {
+        flex-direction: column;
+        align-items: center;
+        .media-content {
+            text-align: center;
+        }
+        .media-left,
+        .media-right{
+            margin: 16px 0;
+        }
+    }
+}
