@@ -24,7 +24,7 @@ export default class Search extends React.Component {
     handleFormSubmit(e) {
         e.preventDefault();
         this.props.handleSearchFormSubmit(this.state.searchQuery);
-        this.props.history.push(`products/${this.state.searchQuery}`)
+        this.props.history.push(`products/${this.state.searchQuery}/1`)
     }
 
     render() {

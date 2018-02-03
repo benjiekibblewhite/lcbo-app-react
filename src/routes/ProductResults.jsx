@@ -4,7 +4,7 @@ import Axios from 'axios';
 import Card from '../components/Card';
 import Loader from 'react-loader-spinner';
 import ResultsData from '../components/ResultsData';
-
+import Pagination from '../components/pagination';
 
 
 import './ProductResults.scss';
@@ -22,15 +22,15 @@ export default class ProductResults extends React.Component {
         this.renderResultsView = this
             .renderResultsView
             .bind(this);
-
+        this.axiosCall = this.axiosCall.bind(this);
         this.state = {
             resultsReceived: false,
             searchResults: {},
         };
     }
 
-    componentDidMount() {
-        const { page_num, query } = this.props.match.params;
+    axiosCall(props) {
+        const { page_num, query } = props.match.params;
         Axios
             .get(`https://lcboapi.com/products?access_key=${process.env.REACT_APP_API_KEY}&per_page=10&q=${query}&xmlToJSON=false"&page=${page_num ? page_num : '1'}`)
             .then((response) => {
@@ -43,6 +43,16 @@ export default class ProductResults extends React.Component {
             .catch(function(error) {
                 console.log(error);
             });
+    }
+
+    componentDidMount() {
+        this.axiosCall(this.props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('yes')
+        this.axiosCall(nextProps);
+        this.forceUpdate()
     }
 
     renderCards(searchResults) {
@@ -79,6 +89,7 @@ export default class ProductResults extends React.Component {
     }
 
     renderResultsView(searchResults) {
+        const pager = this.state.searchResults.pager;
         return (
             <div className="section">
                 <ResultsData 
@@ -88,7 +99,14 @@ export default class ProductResults extends React.Component {
                 <div className="columns is-multiline">
                     {this.renderCards(searchResults)}
                 </div>
-
+                <Pagination
+                    format="center"
+                    totalPages={pager.total_pages}
+                    pageNumber={pager.current_page}
+                    spread={5}
+                    query_or_id={this.props.match.params.query}
+                    resultType="products"
+                />
             </div>
         );
     }
